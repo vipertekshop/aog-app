@@ -85,6 +85,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
   .check-options input:checked+label,.status-pills input:checked+label{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   .field input,.snote,.sum-field textarea{border:none!important;border-bottom:1px solid #999!important;border-radius:0!important;}
 }
+
+/* SECTION RATINGS */
+.rating-wrap{padding:10px 0 2px;border-top:1px solid #f0f4f8;margin-top:6px;}
+.rating-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#5a7a96;margin-bottom:6px;}
+.rating-pills{display:flex;gap:8px;flex-wrap:wrap;}
+.rating-pills input{display:none;}
+.rating-pills label{padding:7px 16px;border:1.5px solid #d0dde8;border-radius:8px;font-size:13px;font-weight:700;color:#5a7a96;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;transition:all .15s;}
+.rating-pills input:checked+label.good{background:#1b5e20;border-color:#1b5e20;color:#fff;}
+.rating-pills input:checked+label.needs{background:#e65100;border-color:#e65100;color:#fff;}
+.rating-pills input:checked+label.bad{background:#b71c1c;border-color:#b71c1c;color:#fff;}
+
+
+/* SECTION RATINGS */
+.rating-wrap{padding:10px 0 4px;border-top:1px solid #f0f4f8;margin-top:8px;}
+.rating-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#5a7a96;margin-bottom:6px;}
+.rating-pills{display:flex;gap:8px;flex-wrap:wrap;}
+.rating-pills input{display:none;}
+.rating-pills label{padding:7px 14px;border:1.5px solid #d0dde8;border-radius:8px;font-size:12px;font-weight:700;color:#5a7a96;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;transition:all .15s;}
+.rating-pills input:checked+label.good{background:#1b5e20;border-color:#1b5e20;color:#fff;}
+.rating-pills input:checked+label.needs{background:#e65100;border-color:#e65100;color:#fff;}
+.rating-pills input:checked+label.bad{background:#b71c1c;border-color:#b71c1c;color:#fff;}
 </style>
 </head>
 <body>
@@ -143,6 +164,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
     <div class="check-row"><div class="check-num">4</div><div class="check-label">Bonding Jumper</div><div class="check-options"><input type="radio" name="ts4" id="ts4i"><label for="ts4i" class="installed">Installed</label><input type="radio" name="ts4" id="ts4r"><label for="ts4r" class="removed">Removed</label></div></div>
     <div class="check-row last"><div class="check-num">5</div><div class="check-label">Vacuumed</div><div class="check-options"><input type="radio" name="ts5" id="ts5y"><label for="ts5y" class="yes">Yes</label><input type="radio" name="ts5" id="ts5n"><label for="ts5n" class="no">No</label></div></div>
     <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Transfer Switch…"></textarea></div>
+    <div class="rating-wrap">
+      <div class="rating-lbl">Section Rating</div>
+      <div class="rating-pills">
+        <input type="radio" name="r-ts" id="r-ts-g"><label for="r-ts-g" class="good">✅ Good</label>
+        <input type="radio" name="r-ts" id="r-ts-n"><label for="r-ts-n" class="needs">⚠️ Needs Attention</label>
+        <input type="radio" name="r-ts" id="r-ts-b"><label for="r-ts-b" class="bad">❌ Bad</label>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -161,6 +190,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
     <div class="check-single"><input type="checkbox" id="m1"><label class="check-label" for="m1">Check For Updated Grounding</label></div>
     <div class="check-single last"><input type="checkbox" id="m2"><label class="check-label" for="m2">Check for ICB</label></div>
     <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Meter…"></textarea></div>
+    <div class="rating-wrap">
+      <div class="rating-lbl">Section Rating</div>
+      <div class="rating-pills">
+        <input type="radio" name="r-meter" id="r-meter-g"><label for="r-meter-g" class="good">✅ Good</label>
+        <input type="radio" name="r-meter" id="r-meter-n"><label for="r-meter-n" class="needs">⚠️ Needs Attention</label>
+        <input type="radio" name="r-meter" id="r-meter-b"><label for="r-meter-b" class="bad">❌ Bad</label>
+      </div>
+    </div>
   </div>
 
   <!-- METER MAIN CONTENT -->
@@ -170,6 +207,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
     <div class="check-row"><div class="check-num">3</div><div class="check-label">Check P-Taps</div><div class="check-options"><input type="radio" name="mm3" id="mm3g"><label for="mm3g" class="good">Good</label><input type="radio" name="mm3" id="mm3b"><label for="mm3b" class="bad">Bad</label></div></div>
     <div class="check-row last"><div class="check-num">4</div><div class="check-label">Vacuumed</div><div class="check-options"><input type="radio" name="mm4" id="mm4y"><label for="mm4y" class="yes">Yes</label><input type="radio" name="mm4" id="mm4n"><label for="mm4n" class="no">No</label></div></div>
     <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Meter Main…"></textarea></div>
+    <div class="rating-wrap">
+      <div class="rating-lbl">Section Rating</div>
+      <div class="rating-pills">
+        <input type="radio" name="r-mm" id="r-mm-g"><label for="r-mm-g" class="good">✅ Good</label>
+        <input type="radio" name="r-mm" id="r-mm-n"><label for="r-mm-n" class="needs">⚠️ Needs Attention</label>
+        <input type="radio" name="r-mm" id="r-mm-b"><label for="r-mm-b" class="bad">❌ Bad</label>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -181,6 +226,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
     <div class="check-row"><div class="check-num">2</div><div class="check-label">Grounds And Neutrals Separated</div><div class="check-options"><input type="radio" name="cp2" id="cp2y"><label for="cp2y" class="yes">Yes</label><input type="radio" name="cp2" id="cp2n"><label for="cp2n" class="no">No</label></div></div>
     <div class="check-row last"><div class="check-num">3</div><div class="check-label">Bonding Screw</div><div class="check-options"><input type="radio" name="cp3" id="cp3i"><label for="cp3i" class="installed">Installed</label><input type="radio" name="cp3" id="cp3r"><label for="cp3r" class="removed">Removed</label></div></div>
     <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Customer Panel…"></textarea></div>
+    <div class="rating-wrap">
+      <div class="rating-lbl">Section Rating</div>
+      <div class="rating-pills">
+        <input type="radio" name="r-cp" id="r-cp-g"><label for="r-cp-g" class="good">✅ Good</label>
+        <input type="radio" name="r-cp" id="r-cp-n"><label for="r-cp-n" class="needs">⚠️ Needs Attention</label>
+        <input type="radio" name="r-cp" id="r-cp-b"><label for="r-cp-b" class="bad">❌ Bad</label>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -191,6 +244,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
     <div class="check-row"><div class="check-num">1</div><div class="check-label">Settings Set Correctly</div><div class="check-options"><input type="radio" name="ls1" id="ls1y"><label for="ls1y" class="yes">Yes</label><input type="radio" name="ls1" id="ls1n"><label for="ls1n" class="no">No</label></div></div>
     <div class="check-row last"><div class="check-num">2</div><div class="check-label">Scroll Saver Mode Set</div><div class="check-options"><input type="radio" name="ls2" id="ls2y"><label for="ls2y" class="yes">Yes</label><input type="radio" name="ls2" id="ls2n"><label for="ls2n" class="no">No</label></div></div>
     <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Load Shedding…"></textarea></div>
+    <div class="rating-wrap">
+      <div class="rating-lbl">Section Rating</div>
+      <div class="rating-pills">
+        <input type="radio" name="r-ls" id="r-ls-g"><label for="r-ls-g" class="good">✅ Good</label>
+        <input type="radio" name="r-ls" id="r-ls-n"><label for="r-ls-n" class="needs">⚠️ Needs Attention</label>
+        <input type="radio" name="r-ls" id="r-ls-b"><label for="r-ls-b" class="bad">❌ Bad</label>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -201,6 +262,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
     <div class="check-row"><div class="check-num">1</div><div class="check-label">Penetration Caulked or Foamed</div><div class="check-options"><input type="radio" name="cs1" id="cs1y"><label for="cs1y" class="yes">Yes</label><input type="radio" name="cs1" id="cs1n"><label for="cs1n" class="no">No</label></div></div>
     <div class="check-row last"><div class="check-num">2</div><div class="check-label">Strapping Condition</div><div class="check-options"><input type="radio" name="cs2" id="cs2g"><label for="cs2g" class="good">Good</label><input type="radio" name="cs2" id="cs2b"><label for="cs2b" class="bad">Bad</label></div></div>
     <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Conduit Strapping…"></textarea></div>
+    <div class="rating-wrap">
+      <div class="rating-lbl">Section Rating</div>
+      <div class="rating-pills">
+        <input type="radio" name="r-cs" id="r-cs-g"><label for="r-cs-g" class="good">✅ Good</label>
+        <input type="radio" name="r-cs" id="r-cs-n"><label for="r-cs-n" class="needs">⚠️ Needs Attention</label>
+        <input type="radio" name="r-cs" id="r-cs-b"><label for="r-cs-b" class="bad">❌ Bad</label>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -215,6 +284,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
     <div class="check-row"><div class="check-num">5</div><div class="check-label">Adjust Gas</div><div class="check-options"><input type="radio" name="gen5" id="gen5c"><label for="gen5c" class="complete">Complete</label><input type="radio" name="gen5" id="gen5n"><label for="gen5n" class="notdone">Not Done</label></div></div>
     <div class="check-row last"><div class="check-num">6</div><div class="check-label">Generator Clean</div><div class="check-options"><input type="radio" name="gen6" id="gen6y"><label for="gen6y" class="yes">Yes</label><input type="radio" name="gen6" id="gen6n"><label for="gen6n" class="no">No</label></div></div>
     <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Generator…"></textarea></div>
+    <div class="rating-wrap">
+      <div class="rating-lbl">Section Rating</div>
+      <div class="rating-pills">
+        <input type="radio" name="r-gen" id="r-gen-g"><label for="r-gen-g" class="good">✅ Good</label>
+        <input type="radio" name="r-gen" id="r-gen-n"><label for="r-gen-n" class="needs">⚠️ Needs Attention</label>
+        <input type="radio" name="r-gen" id="r-gen-b"><label for="r-gen-b" class="bad">❌ Bad</label>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -226,6 +303,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
     <div class="check-row"><div class="check-num">2</div><div class="check-label">Filled?</div><div class="check-options"><input type="radio" name="gt2" id="gt2y"><label for="gt2y" class="yes">Yes</label><input type="radio" name="gt2" id="gt2n"><label for="gt2n" class="no">No</label></div></div>
     <div class="check-row last"><div class="check-num">3</div><div class="check-label">Leak Check</div><div class="check-options"><input type="radio" name="gt3" id="gt3y"><label for="gt3y" class="yes">Yes</label><input type="radio" name="gt3" id="gt3n"><label for="gt3n" class="no">No</label></div></div>
     <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Gas Tank…"></textarea></div>
+    <div class="rating-wrap">
+      <div class="rating-lbl">Section Rating</div>
+      <div class="rating-pills">
+        <input type="radio" name="r-gt" id="r-gt-g"><label for="r-gt-g" class="good">✅ Good</label>
+        <input type="radio" name="r-gt" id="r-gt-n"><label for="r-gt-n" class="needs">⚠️ Needs Attention</label>
+        <input type="radio" name="r-gt" id="r-gt-b"><label for="r-gt-b" class="bad">❌ Bad</label>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -241,6 +326,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
     <div class="check-row"><div class="check-num">6</div><div class="check-label">Leak Down Check Performed</div><div class="check-options"><input type="radio" name="gas6" id="gas6y"><label for="gas6y" class="yes">Yes</label><input type="radio" name="gas6" id="gas6n"><label for="gas6n" class="no">No</label></div></div>
     <div class="check-row last"><div class="check-num">7</div><div class="check-label">Bonded (Attic Run)</div><div class="check-options"><input type="radio" name="gas7" id="gas7y"><label for="gas7y" class="yes">Yes</label><input type="radio" name="gas7" id="gas7n"><label for="gas7n" class="no">No</label></div></div>
     <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Gas…"></textarea></div>
+    <div class="rating-wrap">
+      <div class="rating-lbl">Section Rating</div>
+      <div class="rating-pills">
+        <input type="radio" name="r-gas" id="r-gas-g"><label for="r-gas-g" class="good">✅ Good</label>
+        <input type="radio" name="r-gas" id="r-gas-n"><label for="r-gas-n" class="needs">⚠️ Needs Attention</label>
+        <input type="radio" name="r-gas" id="r-gas-b"><label for="r-gas-b" class="bad">❌ Bad</label>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -250,6 +343,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
   <div class="section-body">
     <div class="check-row last"><div class="check-num">1</div><div class="check-label">Cleaned</div><div class="check-options"><input type="radio" name="js1" id="js1y"><label for="js1y" class="yes">Yes</label><input type="radio" name="js1" id="js1n"><label for="js1n" class="no">No</label></div></div>
     <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Job Site…"></textarea></div>
+    <div class="rating-wrap">
+      <div class="rating-lbl">Section Rating</div>
+      <div class="rating-pills">
+        <input type="radio" name="r-js" id="r-js-g"><label for="r-js-g" class="good">✅ Good</label>
+        <input type="radio" name="r-js" id="r-js-n"><label for="r-js-n" class="needs">⚠️ Needs Attention</label>
+        <input type="radio" name="r-js" id="r-js-b"><label for="r-js-b" class="bad">❌ Bad</label>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -290,11 +391,62 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
   <button class="btn-submit" onclick="submitToSheet()">☁️ Submit</button>
 </div>
 
+
+<div id="toast"></div>
 <script>
-function clearAll() {
-  if (!confirm('Clear all fields?')) return;
-  document.querySelectorAll('input[type=text],input[type=date],textarea').forEach(el => el.value = '');
-  document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(el => el.checked = false);
+function getRating(name) {
+  const el = document.querySelector('input[name="r-'+name+'"]:checked');
+  if (!el) return '';
+  return document.querySelector('label[for="'+el.id+'"]')?.textContent.trim() || '';
+}
+function getJobField(i) {
+  const fields = document.querySelectorAll('.field input[type=text], .field input[type=date]');
+  return fields[i] ? fields[i].value.trim() : '';
+}
+function getOverall() {
+  const el = document.querySelector('input[name="overall"]:checked');
+  return el ? document.querySelector('label[for="'+el.id+'"]')?.textContent.trim() || '' : '';
+}
+function showToast(msg, ok) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = ok ? '#1b5e20' : '#b71c1c';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+async function submitToSheet() {
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = '⏳ Submitting...';
+  btn.disabled = true;
+  const data = {
+    customerName: getJobField(0), date: getJobField(1),
+    address: getJobField(2), technician: getJobField(3),
+    gasCrew: getJobField(4), gasCompletionDate: getJobField(5),
+    electricalCrew: getJobField(6), electricalCompletionDate: getJobField(7),
+    ratingTS: getRating('ts'),
+    ratingMeter: document.getElementById('meter-select')?.value === 'metermain' ? getRating('mm') : getRating('meter'),
+    ratingPanel: getRating('cp'),
+    ratingLoadShed: getRating('ls'),
+    ratingConduit: getRating('cs'),
+    ratingGenerator: getRating('gen'),
+    ratingGasTank: getRating('gt'),
+    ratingGas: getRating('gas'),
+    ratingJobSite: getRating('js'),
+    ratingOverall: getOverall(),
+  };
+  try {
+    await fetch('https://script.google.com/macros/s/AKfycbwN-mbQ_G1AFqjpgmWOai-lV22u9JUHfVsULob1-IgQNx7BNVVWjCSThizm9eUy3Ny_Sg/exec', {
+      method: 'POST', mode: 'no-cors',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    });
+    showToast('✓ Submitted to Google Sheets!', true);
+  } catch(e) {
+    showToast('✗ Failed — check connection', false);
+  } finally {
+    btn.textContent = '☁️ Submit';
+    btn.disabled = false;
+  }
 }
 function switchMeter(val) {
   const titles = { meter: '⚡ Meter', metermain: '🔧 Meter Main' };
@@ -302,139 +454,15 @@ function switchMeter(val) {
   document.getElementById('meter-content').style.display = val === 'meter' ? '' : 'none';
   document.getElementById('metermain-content').style.display = val === 'metermain' ? '' : 'none';
 }
-
+function clearAll() {
+  if (!confirm('Clear all fields?')) return;
+  document.querySelectorAll('input[type=text],input[type=date],textarea').forEach(el => el.value = '');
+  document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(el => el.checked = false);
+}
 window.addEventListener('load', function() {
   try { document.getElementById('ts-date').valueAsDate = new Date(); } catch(e) {}
 });
-
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwN-mbQ_G1AFqjpgmWOai-lV22u9JUHfVsULob1-IgQNx7BNVVWjCSThizm9eUy3Ny_Sg/exec';
-
-function getVal(name) {
-  const el = document.querySelector('input[name="'+name+'"]:checked');
-  return el ? el.value || el.closest('.check-options,check-single')?.querySelector('label[for="'+el.id+'"]')?.textContent?.trim() || el.value : '';
-}
-
-function getCheck(id) {
-  const el = document.getElementById(id);
-  return el && el.checked ? 'Yes' : '';
-}
-
-function getRadioLabel(name) {
-  const el = document.querySelector('input[name="'+name+'"]:checked');
-  if (!el) return '';
-  const lbl = document.querySelector('label[for="'+el.id+'"]');
-  return lbl ? lbl.textContent.trim() : el.value;
-}
-
-function getText(selector) {
-  const el = document.querySelector(selector);
-  return el ? el.value.trim() : '';
-}
-
-function showToast(msg, success=true) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.background = success ? '#1b5e20' : '#b71c1c';
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 4000);
-}
-
-async function submitToSheet() {
-  const btn = document.querySelector('.btn-submit');
-  btn.textContent = '⏳ Submitting...';
-  btn.disabled = true;
-
-  // Collect all form data
-  const inputs = document.querySelectorAll('input[type=text], input[type=date]');
-  const textVals = Array.from(inputs).map(i => i.value);
-  
-  // Get job info fields by order
-  const jobFields = document.querySelectorAll('.field input[type=text], .field input[type=date]');
-  
-  const data = {
-    // Job Info
-    customerName: jobFields[0]?.value || '',
-    date:         jobFields[1]?.value || '',
-    address:      jobFields[2]?.value || '',
-    technician:   jobFields[3]?.value || '',
-    gasCrew:      jobFields[4]?.value || '',
-    gasCompletionDate:      jobFields[5]?.value || '',
-    electricalCrew:         jobFields[6]?.value || '',
-    electricalCompletionDate: jobFields[7]?.value || '',
-
-    // Transfer Switch
-    ts1: getRadioLabel('ts1'), ts2: getRadioLabel('ts2'),
-    ts3: getRadioLabel('ts3'), ts4: getRadioLabel('ts4'),
-    ts5: getRadioLabel('ts5'),
-    tsNotes: document.querySelector('#panel-ts-notes, .snote')?.value || 
-             document.querySelectorAll('.snote')[0]?.value || '',
-
-    // Meter
-    meterType: document.getElementById('meter-select')?.value === 'metermain' ? 'Meter Main' : 'Meter',
-    m1: getCheck('m1'), m2: getCheck('m2'),
-    meterNotes: document.querySelectorAll('.snote')[1]?.value || '',
-    mm1: getRadioLabel('mm1'), mm2: getRadioLabel('mm2'),
-    mm3: getRadioLabel('mm3'), mm4: getRadioLabel('mm4'),
-    metermainNotes: document.querySelectorAll('.snote')[1]?.value || '',
-
-    // Customer Panel
-    cp1: getRadioLabel('cp1'), cp2: getRadioLabel('cp2'), cp3: getRadioLabel('cp3'),
-    cpNotes: document.querySelectorAll('.snote')[2]?.value || '',
-
-    // Load Shedding
-    ls1: getRadioLabel('ls1'), ls2: getRadioLabel('ls2'),
-    lsNotes: document.querySelectorAll('.snote')[3]?.value || '',
-
-    // Conduit Strapping
-    cs1: getRadioLabel('cs1'), cs2: getRadioLabel('cs2'),
-    csNotes: document.querySelectorAll('.snote')[4]?.value || '',
-
-    // Generator
-    gen1: getRadioLabel('gen1'), gen2: getRadioLabel('gen2'),
-    gen3: getRadioLabel('gen3'), gen4: getRadioLabel('gen4'),
-    gen5: getRadioLabel('gen5'), gen6: getRadioLabel('gen6'),
-    genNotes: document.querySelectorAll('.snote')[5]?.value || '',
-
-    // Gas Tank
-    gt1: getRadioLabel('gt1'), gt2: getRadioLabel('gt2'), gt3: getRadioLabel('gt3'),
-    gtNotes: document.querySelectorAll('.snote')[6]?.value || '',
-
-    // Gas
-    gas1: getRadioLabel('gas1'), gas2: getRadioLabel('gas2'),
-    gas3: getRadioLabel('gas3'), gas4: getRadioLabel('gas4'),
-    gas5: getRadioLabel('gas5'), gas6: getRadioLabel('gas6'),
-    gas7: getRadioLabel('gas7'),
-    gasNotes: document.querySelectorAll('.snote')[7]?.value || '',
-
-    // Job Site
-    js1: getRadioLabel('js1'),
-    jsNotes: document.querySelectorAll('.snote')[8]?.value || '',
-
-    // Summary
-    overall:  document.querySelector('input[name="overall"]:checked')?.nextElementSibling?.textContent?.trim() || '',
-    followUp: document.querySelectorAll('.sum-field textarea')[0]?.value || '',
-    comments: document.querySelectorAll('.sum-field textarea')[1]?.value || '',
-  };
-
-  try {
-    const response = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    // no-cors means we can't read the response, but if no error was thrown it worked
-    showToast('✓ Submitted to Google Sheets!', true);
-  } catch(err) {
-    showToast('✗ Submission failed — check connection', false);
-    console.error(err);
-  } finally {
-    btn.textContent = '☁️ Submit';
-    btn.disabled = false;
-  }
-}
-
 </script>
-<div id="toast"></div>
+<div id="toast" style="position:fixed;top:60px;left:50%;transform:translateX(-50%);color:#fff;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,0.3);opacity:0;transition:all 0.4s;pointer-events:none;z-index:9999;text-align:center;max-width:85vw;white-space:normal;"></div>
 </body>
 </html>
