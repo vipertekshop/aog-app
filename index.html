@@ -124,22 +124,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
 
 <script>
 if ('serviceWorker' in navigator) {
-  // Unregister ALL old service workers first, then register fresh one
-  navigator.serviceWorker.getRegistrations().then(regs => {
-    const unregs = regs.map(r => r.unregister());
-    return Promise.all(unregs);
-  }).then(() => {
-    // Clear all caches
-    return caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))));
-  }).then(() => {
-    // Register fresh SW
-    return navigator.serviceWorker.register('/sw.js');
-  });
+  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
 }
-
-const isStandalone = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
-if (isStandalone) document.getElementById('installSection').style.display = 'none';
-
 let installPrompt = null;
 window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
@@ -155,6 +141,8 @@ async function doInstall() {
   await installPrompt.userChoice;
   installPrompt = null;
 }
+const isStandalone = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
+if (isStandalone) document.getElementById('installSection').style.display = 'none';
 </script>
 </body>
 </html>
