@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electrical Installation – AOG</title>
+<meta name="theme-color" content="#0f2236">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:#1a2a38;font-size:14px;padding-bottom:100px;}
+.navbar{position:sticky;top:0;z-index:100;background:#0f2236;display:flex;align-items:center;gap:12px;padding:0 16px;height:52px;box-shadow:0 2px 8px rgba(0,0,0,0.3);}
+.back-btn{color:#f5a623;font-size:22px;text-decoration:none;line-height:1;padding:4px 0;-webkit-tap-highlight-color:transparent;}
+.nav-title{color:#fff;font-size:16px;font-weight:700;letter-spacing:0.5px;}
+.nav-actions{margin-left:auto;display:flex;gap:8px;}
+.nav-btn{background:rgba(255,255,255,0.12);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.nav-btn.primary{background:#f5a623;color:#0f2236;}
+.form-wrap{max-width:680px;margin:0 auto;padding:16px;}
+.section{background:#fff;border-radius:12px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+.section-title{background:#1a3a5c;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
+.section-body{padding:14px 16px;display:flex;flex-direction:column;gap:12px;}
+.row{display:flex;flex-wrap:wrap;gap:10px;}
+.field{flex:1;min-width:140px;display:flex;flex-direction:column;gap:4px;}
+.field.full{flex-basis:100%;min-width:100%;}
+.field label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:#5a7a96;}
+.field input[type=text],.field input[type=date],.field textarea{width:100%;padding:9px 10px;border:1.5px solid #d0dde8;border-radius:8px;font-size:15px;background:#fafbfd;outline:none;font-family:inherit;}
+.field input:focus,.field textarea:focus{border-color:#1a3a5c;background:#eef3f8;}
+.field textarea{resize:vertical;min-height:60px;}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.pills input{display:none;}
+.pills label{padding:7px 14px;border:1.5px solid #d0dde8;border-radius:8px;font-size:13px;font-weight:600;color:#5a7a96;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;transition:all .15s;}
+.pills input:checked+label{background:#1a3a5c;border-color:#1a3a5c;color:#fff;}
+.yn{display:flex;gap:8px;margin-top:2px;}
+.yn input{display:none;}
+.yn label{padding:7px 20px;border:1.5px solid #d0dde8;border-radius:8px;font-size:14px;font-weight:700;color:#5a7a96;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;}
+.yn input:checked+label.y{background:#1b5e20;border-color:#1b5e20;color:#fff;}
+.yn input:checked+label.n{background:#b71c1c;border-color:#b71c1c;color:#fff;}
+
+/* wire grid */
+.wire-grid{display:grid;gap:6px;margin-top:4px;}
+.wire-row{display:grid;gap:6px;align-items:center;}
+.wire-row .w-lbl{font-size:11px;font-weight:700;color:#5a7a96;text-transform:uppercase;text-align:center;}
+.wire-row input{text-align:center;padding:8px 4px;border:1.5px solid #d0dde8;border-radius:8px;font-size:14px;background:#fafbfd;outline:none;width:100%;}
+.wire-row input:focus{border-color:#1a3a5c;}
+
+/* fittings */
+.fit-section-hdr{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#5a7a96;margin:10px 0 4px;padding-bottom:4px;border-bottom:1px solid #e8eef4;}
+.fit-row{display:grid;gap:5px;margin-bottom:5px;align-items:center;}
+.fit-row .f-lbl{font-size:12px;color:#1a2a38;padding:3px 0;}
+.fit-row input{text-align:center;padding:6px 3px;border:1.5px solid #d0dde8;border-radius:6px;font-size:13px;background:#fafbfd;outline:none;width:100%;}
+.fit-row input:focus{border-color:#1a3a5c;}
+.fit-col-hdr{text-align:center;font-size:9px;font-weight:700;color:#5a7a96;text-transform:uppercase;}
+
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#0f2236;padding:12px 16px;display:flex;gap:10px;box-shadow:0 -2px 10px rgba(0,0,0,0.3);}
+.bottom-bar button{flex:1;padding:13px 8px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;}
+.btn-save{background:#f5a623;color:#0f2236;}
+.btn-clear{background:rgba(255,255,255,0.12);color:#fff;}
+
+@media print{
+  .navbar,.bottom-bar{display:none!important;}
+  body{background:#fff;padding-bottom:0;}
+  .form-wrap{padding:0;max-width:100%;}
+  .section{box-shadow:none;border:1px solid #ccc;border-radius:4px;margin-bottom:6px;}
+  .section-title{background:#1a3a5c!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .pills label,.yn label{border:1px solid #ccc;padding:3px 8px;font-size:10px;}
+  .pills input:checked+label{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .field input,.field textarea,.wire-row input,.fit-row input{border:none!important;border-bottom:1px solid #999!important;border-radius:0!important;}
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <a class="back-btn" href="/index.html">‹</a>
+  <span class="nav-title">⚡ Electrical Installation</span>
+  <div class="nav-actions">
+    <button class="nav-btn" onclick="clearAll()">Clear</button>
+    <button class="nav-btn primary" onclick="window.print()">🖨 Print / Save PDF</button>
+  </div>
+</div>
+
+<div class="form-wrap">
+
+<!-- JOB INFO -->
+<div class="section">
+  <div class="section-title">Job Information</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field"><label>Customer Name</label><input type="text" placeholder="Full name"></div>
+      <div class="field"><label>Date</label><input type="date" id="e-date"></div>
+    </div>
+    <div class="row">
+      <div class="field full"><label>Address</label><input type="text" placeholder="Street, City, State ZIP"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Install Truck</label><input type="text" placeholder="Truck ID"></div>
+      <div class="field"><label>Job #</label><input type="text" placeholder="Job number"></div>
+    </div>
+    <div class="field full"><label>Team Member Names</label><input type="text" placeholder="Names"></div>
+  </div>
+</div>
+
+<!-- WIRE LENGTHS -->
+<div class="section">
+  <div class="section-title">Wire Lengths (ft)</div>
+  <div class="section-body">
+    <div id="wire-body"></div>
+  </div>
+</div>
+
+<!-- FITTINGS -->
+<div class="section">
+  <div class="section-title">Fittings (qty by size)</div>
+  <div class="section-body" id="fit-body"></div>
+</div>
+
+<!-- ADDITIONAL MATERIALS -->
+<div class="section">
+  <div class="section-title">Additional Materials</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field"><label>16"×14"×6" JBOX PVC (Qty)</label><input type="text" inputmode="numeric" placeholder="0"></div>
+      <div class="field"><label>14"×12"×4" JBOX PVC (Qty)</label><input type="text" inputmode="numeric" placeholder="0"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Shallow Strut (length)</label><input type="text" placeholder="ft"></div>
+      <div class="field"><label>Deep Strut (length)</label><input type="text" placeholder="ft"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>100A Disconnects (Qty)</label><input type="text" inputmode="numeric" placeholder="0"></div>
+      <div class="field"><label>60A Disconnects (Qty)</label><input type="text" inputmode="numeric" placeholder="0"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>60lb Bags Sakrete (Qty)</label><input type="text" inputmode="numeric" placeholder="0"></div>
+      <div class="field"><label>4"×4"×3' Gutter</label><input type="text" placeholder="qty/length"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Surge Protectors (Qty)</label><input type="text" inputmode="numeric" placeholder="0"></div>
+      <div class="field"><label>PSP Load Shed Modules (Qty)</label><input type="text" inputmode="numeric" placeholder="0"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>2'×4'×8' (Qty)</label><input type="text" inputmode="numeric" placeholder="0"></div>
+      <div class="field"><label>Other</label><input type="text" placeholder="Description"></div>
+    </div>
+  </div>
+</div>
+
+<!-- WALK THROUGH -->
+<div class="section">
+  <div class="section-title">Walk Through</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field"><label>Team Member</label><input type="text" placeholder="Name"></div>
+      <div class="field"><label>Double Checked By</label><input type="text" placeholder="Name"></div>
+    </div>
+    <div class="field"><label>Service Change</label><div class="yn"><input type="radio" name="e-sc" id="e-sc-y"><label for="e-sc-y" class="y">Y</label><input type="radio" name="e-sc" id="e-sc-n"><label for="e-sc-n" class="n">N</label></div></div>
+    <div class="field"><label>Harness Plugged In Transfer Switch(es)</label><div class="yn"><input type="radio" name="e-hn" id="e-hn-y"><label for="e-hn-y" class="y">Y</label><input type="radio" name="e-hn" id="e-hn-n"><label for="e-hn-n" class="n">N</label></div></div>
+    <div class="field"><label>Grounding Updated</label><div class="yn"><input type="radio" name="e-gnd" id="e-gd-y"><label for="e-gd-y" class="y">Y</label><input type="radio" name="e-gnd" id="e-gd-n"><label for="e-gd-n" class="n">N</label></div></div>
+    <div class="field"><label>Grounds and Neutrals Separated</label><div class="yn"><input type="radio" name="e-sep" id="e-sp-y"><label for="e-sp-y" class="y">Y</label><input type="radio" name="e-sep" id="e-sp-n"><label for="e-sp-n" class="n">N</label></div></div>
+    <div class="field"><label>Transfer Switch(es) Made Up</label><div class="yn"><input type="radio" name="e-ts" id="e-ts-y"><label for="e-ts-y" class="y">Y</label><input type="radio" name="e-ts" id="e-ts-n"><label for="e-ts-n" class="n">N</label></div></div>
+    <div class="field"><label>Generator Made Up</label><div class="yn"><input type="radio" name="e-gm" id="e-gm-y"><label for="e-gm-y" class="y">Y</label><input type="radio" name="e-gm" id="e-gm-n"><label for="e-gm-n" class="n">N</label></div></div>
+    <div class="field">
+      <label>Generator Electrical Run</label>
+      <div class="pills">
+        <input type="radio" name="e-run" id="e-sm"><label for="e-sm">Surface Mount</label>
+        <input type="radio" name="e-run" id="e-ug"><label for="e-ug">Underground</label>
+        <input type="radio" name="e-run" id="e-at"><label for="e-at">Attic</label>
+      </div>
+    </div>
+    <div class="field"><label>Generator Set to NG or LQ in Controller</label><div class="yn"><input type="radio" name="e-fu" id="e-fu-y"><label for="e-fu-y" class="y">Y</label><input type="radio" name="e-fu" id="e-fu-n"><label for="e-fu-n" class="n">N</label></div></div>
+    <div class="field"><label>60A Load Shed Installed & Programmed</label><div class="yn"><input type="radio" name="e-l6" id="e-l6-y"><label for="e-l6-y" class="y">Y</label><input type="radio" name="e-l6" id="e-l6-n"><label for="e-l6-n" class="n">N</label></div></div>
+    <div class="field"><label>100A Load Shed Installed & Programmed</label><div class="yn"><input type="radio" name="e-l1" id="e-l1-y"><label for="e-l1-y" class="y">Y</label><input type="radio" name="e-l1" id="e-l1-n"><label for="e-l1-n" class="n">N</label></div></div>
+    <div class="field"><label>Panel Lugs Torqued to Spec</label><div class="yn"><input type="radio" name="e-tq" id="e-tq-y"><label for="e-tq-y" class="y">Y</label><input type="radio" name="e-tq" id="e-tq-n"><label for="e-tq-n" class="n">N</label></div></div>
+    <div class="field"><label>Generator Electrical Run Torqued in Generator & TS</label><div class="yn"><input type="radio" name="e-t2" id="e-t2-y"><label for="e-t2-y" class="y">Y</label><input type="radio" name="e-t2" id="e-t2-n"><label for="e-t2-n" class="n">N</label></div></div>
+    <div class="field full"><label>Needs Completed</label><input type="text" placeholder="Notes"></div>
+  </div>
+</div>
+
+<!-- INSPECTIONS -->
+<div class="section">
+  <div class="section-title">Inspections</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field"><label>Team Member</label><input type="text" placeholder="Name"></div>
+      <div class="field"><label>Double Checked By</label><input type="text" placeholder="Name"></div>
+    </div>
+    <div class="field"><label>Inspected</label><div class="yn"><input type="radio" name="e-in" id="e-in-y"><label for="e-in-y" class="y">Y</label><input type="radio" name="e-in" id="e-in-n"><label for="e-in-n" class="n">N</label></div></div>
+    <div class="field"><label>FIRE Inspector</label><div class="yn"><input type="radio" name="e-fi" id="e-fi-y"><label for="e-fi-y" class="y">Y</label><input type="radio" name="e-fi" id="e-fi-n"><label for="e-fi-n" class="n">N</label></div></div>
+    <div class="field"><label>Footing</label><div class="yn"><input type="radio" name="e-fo" id="e-fo-y"><label for="e-fo-y" class="y">Y</label><input type="radio" name="e-fo" id="e-fo-n"><label for="e-fo-n" class="n">N</label></div></div>
+    <div class="field"><label>County</label><div class="yn"><input type="radio" name="e-co" id="e-co-y"><label for="e-co-y" class="y">Y</label><input type="radio" name="e-co" id="e-co-n"><label for="e-co-n" class="n">N</label></div></div>
+    <div class="field"><label>Gas Rough</label><div class="yn"><input type="radio" name="e-gr" id="e-gr-y"><label for="e-gr-y" class="y">Y</label><input type="radio" name="e-gr" id="e-gr-n"><label for="e-gr-n" class="n">N</label></div></div>
+    <div class="field"><label>Tank</label><div class="yn"><input type="radio" name="e-tk" id="e-tk-y"><label for="e-tk-y" class="y">Y</label><input type="radio" name="e-tk" id="e-tk-n"><label for="e-tk-n" class="n">N</label></div></div>
+    <div class="field"><label>Underground (Gas or Electric)</label><div class="yn"><input type="radio" name="e-ug2" id="e-u2-y"><label for="e-u2-y" class="y">Y</label><input type="radio" name="e-ug2" id="e-u2-n"><label for="e-u2-n" class="n">N</label></div></div>
+    <div class="field"><label>Final Electrical Passed</label><div class="yn"><input type="radio" name="e-fe" id="e-fe-y"><label for="e-fe-y" class="y">Y</label><input type="radio" name="e-fe" id="e-fe-n"><label for="e-fe-n" class="n">N</label></div></div>
+    <div class="field"><label>Final Gas</label><div class="yn"><input type="radio" name="e-fg" id="e-fg-y"><label for="e-fg-y" class="y">Y</label><input type="radio" name="e-fg" id="e-fg-n"><label for="e-fg-n" class="n">N</label></div></div>
+  </div>
+</div>
+
+<!-- CLEAN UP -->
+<div class="section">
+  <div class="section-title">Clean Up & Miscues</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field"><label>Team Member</label><input type="text" placeholder="Name"></div>
+      <div class="field"><label>Double Checked By</label><input type="text" placeholder="Name"></div>
+    </div>
+    <div class="field"><label>Everything Picked Up & Clean</label><div class="yn"><input type="radio" name="e-cl" id="e-cl-y"><label for="e-cl-y" class="y">Y</label><input type="radio" name="e-cl" id="e-cl-n"><label for="e-cl-n" class="n">N</label></div></div>
+    <div class="field"><label>Ready for H/O Training</label><div class="yn"><input type="radio" name="e-ho" id="e-ho-y"><label for="e-ho-y" class="y">Y</label><input type="radio" name="e-ho" id="e-ho-n"><label for="e-ho-n" class="n">N</label></div></div>
+    <div class="field full"><label>Miscues or Delays</label><textarea rows="3" placeholder="Any miscues or delays during the job…"></textarea></div>
+  </div>
+</div>
+
+</div><!-- /form-wrap -->
+
+<div class="bottom-bar">
+  <button class="btn-clear" onclick="clearAll()">🗑 Clear Form</button>
+  <button class="btn-save" onclick="window.print()">🖨 Print / Save PDF</button>
+</div>
+
+<script>
+document.getElementById('e-date').valueAsDate = new Date();
+
+// Build wire length grids
+const cuWires = ['250 AL KCM','3/0 Cu','#1 Al','1/0 Al','2/0 Al','3/0 Al','4/0 Al','#8 Cu BLK','#6 Cu GRN','#6 BLK','#4 Cu','#3 Cu'];
+const thhnWires = ['#14','#12','#10','Gen-Pro Wire','22-24kw Al','22-24kw Cu','26kw Cu','26-28kw Al'];
+
+function buildWireGrid(container, label, items) {
+  const hdr = document.createElement('div');
+  hdr.style.cssText = 'font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#5a7a96;margin-bottom:6px;margin-top:8px;';
+  hdr.textContent = label;
+  container.appendChild(hdr);
+  const grid = document.createElement('div');
+  grid.style.cssText = 'display:grid;grid-template-columns:repeat('+Math.min(items.length,4)+',1fr);gap:6px;';
+  items.forEach(w => {
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'display:flex;flex-direction:column;gap:3px;';
+    wrap.innerHTML = '<div style="font-size:10px;font-weight:700;color:#5a7a96;text-align:center;text-transform:uppercase">'+w+'</div>' +
+      '<input type="text" inputmode="numeric" placeholder="0" style="text-align:center;padding:8px 4px;border:1.5px solid #d0dde8;border-radius:8px;font-size:14px;background:#fafbfd;outline:none;width:100%;">';
+    grid.appendChild(wrap);
+  });
+  container.appendChild(grid);
+}
+
+const wireBody = document.getElementById('wire-body');
+buildWireGrid(wireBody, 'Cu Wire / Length', cuWires);
+buildWireGrid(wireBody, 'THHN Wire / Length', thhnWires);
+
+// Build fittings table
+const fitSizes = ['3"','2-1/2"','2"','1-1/2"','1-1/4"','1"','¾"','½"'];
+const fittings = [
+  'PVC Pipe','Weatherproof Seals','Weatherproof Lock Rings','Fiber Bushings','Lock Rings',
+  'Male Adapters','Female Adapters','Couplings','Box Adapters','LB PVC','LL PVC','LR PVC',
+  'Sch40 90s','Sch40 45s','Seal Tight Straights','Seal Tight 90s','Seal Tight Car-Flex Hose',
+  'Myers Hubs','PVC Offset',"Mini's",'Strut Clamps','Two Hole Straps PVC','K.O. Seals',
+  'Weatherproof Seals','3/0 AWG Polaris Taps (Dual Port)','3/0 AWG Straights Polaris Taps',
+  '1/0 AWG Polaris Taps (Dual Port)'
+];
+
+const fitBody = document.getElementById('fit-body');
+const cols = '2fr repeat(' + fitSizes.length + ',1fr)';
+
+// header
+const fHdr = document.createElement('div');
+fHdr.className = 'fit-row';
+fHdr.style.gridTemplateColumns = cols;
+fHdr.innerHTML = '<div class="f-lbl" style="font-weight:700;color:#5a7a96;font-size:11px">Fitting</div>' +
+  fitSizes.map(s => '<div class="fit-col-hdr">'+s+'</div>').join('');
+fitBody.appendChild(fHdr);
+
+fittings.forEach(name => {
+  const row = document.createElement('div');
+  row.className = 'fit-row';
+  row.style.gridTemplateColumns = cols;
+  row.innerHTML = '<div class="f-lbl">'+name+'</div>' +
+    fitSizes.map(sz => '<input type="text" inputmode="numeric" placeholder="0" data-fitting="'+name+'" data-size="'+sz+'">').join('');
+  fitBody.appendChild(row);
+});
+
+function clearAll() {
+  if (!confirm('Clear all fields?')) return;
+  document.querySelectorAll('input[type=text],input[type=date],textarea').forEach(el => el.value = '');
+  document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(el => el.checked = false);
+}
+</script>
+</body>
+</html>

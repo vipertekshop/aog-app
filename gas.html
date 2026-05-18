@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gas Installation – AOG</title>
+<meta name="theme-color" content="#0f2236">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:#1a2a38;font-size:14px;padding-bottom:100px;}
+.navbar{position:sticky;top:0;z-index:100;background:#0f2236;display:flex;align-items:center;gap:12px;padding:0 16px;height:52px;box-shadow:0 2px 8px rgba(0,0,0,0.3);}
+.back-btn{color:#f5a623;font-size:22px;text-decoration:none;line-height:1;padding:4px 0;-webkit-tap-highlight-color:transparent;}
+.nav-title{color:#fff;font-size:16px;font-weight:700;letter-spacing:0.5px;}
+.nav-actions{margin-left:auto;display:flex;gap:8px;}
+.nav-btn{background:rgba(255,255,255,0.12);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.nav-btn.primary{background:#f5a623;color:#0f2236;}
+.form-wrap{max-width:680px;margin:0 auto;padding:16px;}
+.section{background:#fff;border-radius:12px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+.section-title{background:#1a3a5c;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
+.section-body{padding:14px 16px;display:flex;flex-direction:column;gap:12px;}
+.row{display:flex;flex-wrap:wrap;gap:10px;}
+.field{flex:1;min-width:140px;display:flex;flex-direction:column;gap:4px;}
+.field.full{flex-basis:100%;min-width:100%;}
+.field label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:#5a7a96;}
+.field input[type=text],.field input[type=date],.field textarea{width:100%;padding:9px 10px;border:1.5px solid #d0dde8;border-radius:8px;font-size:15px;background:#fafbfd;outline:none;font-family:inherit;}
+.field input:focus,.field textarea:focus{border-color:#1a3a5c;background:#eef3f8;}
+.field textarea{resize:vertical;min-height:60px;}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.pills input{display:none;}
+.pills label{padding:7px 14px;border:1.5px solid #d0dde8;border-radius:8px;font-size:13px;font-weight:600;color:#5a7a96;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;transition:all .15s;}
+.pills input:checked+label{background:#1a3a5c;border-color:#1a3a5c;color:#fff;}
+.yn{display:flex;gap:8px;margin-top:2px;}
+.yn input{display:none;}
+.yn label{padding:7px 20px;border:1.5px solid #d0dde8;border-radius:8px;font-size:14px;font-weight:700;color:#5a7a96;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;}
+.yn input:checked+label.y{background:#1b5e20;border-color:#1b5e20;color:#fff;}
+.yn input:checked+label.n{background:#b71c1c;border-color:#b71c1c;color:#fff;}
+
+/* Regulator grid */
+.reg-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:6px;}
+.reg-grid .col-hdr{text-align:center;font-size:10px;font-weight:700;color:#5a7a96;text-transform:uppercase;padding-bottom:2px;}
+.reg-grid input{text-align:center;padding:7px 4px;border:1.5px solid #d0dde8;border-radius:6px;font-size:14px;background:#fafbfd;outline:none;width:100%;}
+.reg-grid input:focus{border-color:#1a3a5c;}
+
+/* Materials */
+.mat-row{display:grid;gap:5px;margin-bottom:5px;align-items:center;}
+.mat-row .mat-lbl{font-size:12px;color:#1a2a38;padding:4px 0;}
+.mat-row input{text-align:center;padding:6px 4px;border:1.5px solid #d0dde8;border-radius:6px;font-size:13px;background:#fafbfd;outline:none;width:100%;}
+.mat-row input:focus{border-color:#1a3a5c;}
+.mat-section-hdr{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#5a7a96;margin:10px 0 4px;padding-bottom:4px;border-bottom:1px solid #e8eef4;}
+
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#0f2236;padding:12px 16px;display:flex;gap:10px;box-shadow:0 -2px 10px rgba(0,0,0,0.3);}
+.bottom-bar button{flex:1;padding:13px 8px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;}
+.btn-save{background:#f5a623;color:#0f2236;}
+.btn-clear{background:rgba(255,255,255,0.12);color:#fff;}
+
+@media print{
+  .navbar,.bottom-bar{display:none!important;}
+  body{background:#fff;padding-bottom:0;}
+  .form-wrap{padding:0;max-width:100%;}
+  .section{box-shadow:none;border:1px solid #ccc;border-radius:4px;margin-bottom:6px;}
+  .section-title{background:#1a3a5c!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .pills label,.yn label{border:1px solid #ccc;padding:3px 8px;font-size:10px;}
+  .pills input:checked+label{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .field input,.field textarea,.reg-grid input,.mat-row input{border:none!important;border-bottom:1px solid #999!important;border-radius:0!important;}
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <a class="back-btn" href="/index.html">‹</a>
+  <span class="nav-title">🔥 Gas Installation</span>
+  <div class="nav-actions">
+    <button class="nav-btn" onclick="clearAll()">Clear</button>
+    <button class="nav-btn primary" onclick="window.print()">🖨 Print / Save PDF</button>
+  </div>
+</div>
+
+<div class="form-wrap">
+
+<!-- JOB INFO -->
+<div class="section">
+  <div class="section-title">Job Information</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field"><label>Customer Name</label><input type="text" placeholder="Full name"></div>
+      <div class="field"><label>Date</label><input type="date" id="g-date"></div>
+    </div>
+    <div class="row">
+      <div class="field full"><label>Address</label><input type="text" placeholder="Street, City, State ZIP"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Gas Truck</label><input type="text" placeholder="Truck ID"></div>
+      <div class="field"><label>Job #</label><input type="text" placeholder="Job number"></div>
+    </div>
+    <div class="field full"><label>Team Member Names</label><input type="text" placeholder="Names"></div>
+  </div>
+</div>
+
+<!-- GAS -->
+<div class="section">
+  <div class="section-title">Gas</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field"><label>Team Member</label><input type="text" placeholder="Name"></div>
+      <div class="field"><label>Double Checked By</label><input type="text" placeholder="Name"></div>
+    </div>
+    <div class="field">
+      <label>Fuel Type</label>
+      <div class="pills">
+        <input type="radio" name="g-fuel" id="g-ng"><label for="g-ng">Natural Gas</label>
+        <input type="radio" name="g-fuel" id="g-lp"><label for="g-lp">Liquid Propane</label>
+        <input type="radio" name="g-fuel" id="g-lpug"><label for="g-lpug">LP Underground</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field"><label>LP Tank Size</label><input type="text" placeholder='e.g. 500 gal AG'></div>
+      <div class="field"><label>Tank Serial #</label><input type="text" placeholder="Serial number"></div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Existing Gas?</label>
+        <div class="yn"><input type="radio" name="g-ex" id="g-ex-y"><label for="g-ex-y" class="y">Y</label><input type="radio" name="g-ex" id="g-ex-n"><label for="g-ex-n" class="n">N</label></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Surface Mounted Length</label><input type="text" placeholder="ft"></div>
+      <div class="field"><label>Underground Length</label><input type="text" placeholder="ft"></div>
+      <div class="field"><label>Attic CSST Length</label><input type="text" placeholder="ft"></div>
+    </div>
+    <div class="field full"><label>Needs Completed</label><input type="text" placeholder="Notes"></div>
+  </div>
+</div>
+
+<!-- WALK THROUGH -->
+<div class="section">
+  <div class="section-title">Walk Through</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field"><label>Team Member</label><input type="text" placeholder="Name"></div>
+      <div class="field"><label>Double Checked By</label><input type="text" placeholder="Name"></div>
+    </div>
+    <div class="field"><label>Gas Affidavit Form</label><div class="yn"><input type="radio" name="g-aff" id="g-af-y"><label for="g-af-y" class="y">Y</label><input type="radio" name="g-aff" id="g-af-n"><label for="g-af-n" class="n">N</label></div></div>
+    <div class="field"><label>Leak Check</label><div class="yn"><input type="radio" name="g-lk" id="g-lk-y"><label for="g-lk-y" class="y">Y</label><input type="radio" name="g-lk" id="g-lk-n"><label for="g-lk-n" class="n">N</label></div></div>
+    <div class="field"><label>Sediment Trap (Liquid Cooled Only)</label><div class="yn"><input type="radio" name="g-sed" id="g-sd-y"><label for="g-sd-y" class="y">Y</label><input type="radio" name="g-sed" id="g-sd-n"><label for="g-sd-n" class="n">N</label></div></div>
+    <div class="field"><label>Verification on Shutoff Valves</label><div class="yn"><input type="radio" name="g-sov" id="g-sv-y"><label for="g-sv-y" class="y">Y</label><input type="radio" name="g-sov" id="g-sv-n"><label for="g-sv-n" class="n">N</label></div></div>
+    <div class="field"><label>Generator Flex Whip Properly Connected (No Kinks)</label><div class="yn"><input type="radio" name="g-fl" id="g-fl-y"><label for="g-fl-y" class="y">Y</label><input type="radio" name="g-fl" id="g-fl-n"><label for="g-fl-n" class="n">N</label></div></div>
+    <div class="field"><label>Pressure Check</label><div class="yn"><input type="radio" name="g-pr" id="g-pr-y"><label for="g-pr-y" class="y">Y</label><input type="radio" name="g-pr" id="g-pr-n"><label for="g-pr-n" class="n">N</label></div></div>
+    <div class="field"><label>Purged Line (If Gas Ready)</label><div class="yn"><input type="radio" name="g-pu" id="g-pu-y"><label for="g-pu-y" class="y">Y</label><input type="radio" name="g-pu" id="g-pu-n"><label for="g-pu-n" class="n">N</label></div></div>
+    <div class="field"><label>Painted Threads/Fittings</label><div class="yn"><input type="radio" name="g-pt" id="g-pt-y"><label for="g-pt-y" class="y">Y</label><input type="radio" name="g-pt" id="g-pt-n"><label for="g-pt-n" class="n">N</label></div></div>
+    <div class="field"><label>1st Stage Connection</label><div class="yn"><input type="radio" name="g-1st" id="g-1s-y"><label for="g-1s-y" class="y">Y</label><input type="radio" name="g-1st" id="g-1s-n"><label for="g-1s-n" class="n">N</label></div></div>
+    <div class="field"><label>Regulators Properly Installed to Code</label><div class="yn"><input type="radio" name="g-reg" id="g-rg-y"><label for="g-rg-y" class="y">Y</label><input type="radio" name="g-reg" id="g-rg-n"><label for="g-rg-n" class="n">N</label></div></div>
+  </div>
+</div>
+
+<!-- REGULATOR TRACKING -->
+<div class="section">
+  <div class="section-title">Regulator Tracking</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field">
+        <label>1st Stage Regulator Used?</label>
+        <div class="yn"><input type="radio" name="g-s1" id="g-s1-y"><label for="g-s1-y" class="y">Y</label><input type="radio" name="g-s1" id="g-s1-n"><label for="g-s1-n" class="n">N</label></div>
+      </div>
+      <div class="field"><label>1st Stage Qty</label><input type="text" placeholder="0"></div>
+      <div class="field"><label>1st Stage Size</label><input type="text" placeholder='e.g. ¾"'></div>
+    </div>
+    <div class="field full">
+      <label>2nd Stage – Norgas &nbsp;<span style="font-weight:400;text-transform:none;font-size:11px">(qty by size: 2" / 1¼" / 1" / ¾" / ½")</span></label>
+      <div class="reg-grid">
+        <div class="col-hdr">2"</div><div class="col-hdr">1¼"</div><div class="col-hdr">1"</div><div class="col-hdr">¾"</div><div class="col-hdr">½"</div>
+        <input type="text" data-reg="Norgas" data-sz='2"' placeholder="0">
+        <input type="text" data-reg="Norgas" data-sz='1-1/4"' placeholder="0">
+        <input type="text" data-reg="Norgas" data-sz='1"' placeholder="0">
+        <input type="text" data-reg="Norgas" data-sz='¾"' placeholder="0">
+        <input type="text" data-reg="Norgas" data-sz='½"' placeholder="0">
+      </div>
+    </div>
+    <div class="field full">
+      <label>2nd Stage – Straight</label>
+      <div class="reg-grid">
+        <div class="col-hdr">2"</div><div class="col-hdr">1¼"</div><div class="col-hdr">1"</div><div class="col-hdr">¾"</div><div class="col-hdr">½"</div>
+        <input type="text" placeholder="0"><input type="text" placeholder="0"><input type="text" placeholder="0"><input type="text" placeholder="0"><input type="text" placeholder="0">
+      </div>
+    </div>
+    <div class="field full">
+      <label>2nd Stage – Back Mount</label>
+      <div class="reg-grid">
+        <div class="col-hdr">2"</div><div class="col-hdr">1¼"</div><div class="col-hdr">1"</div><div class="col-hdr">¾"</div><div class="col-hdr">½"</div>
+        <input type="text" placeholder="0"><input type="text" placeholder="0"><input type="text" placeholder="0"><input type="text" placeholder="0"><input type="text" placeholder="0">
+      </div>
+    </div>
+    <div class="field full">
+      <label>2PSI</label>
+      <div class="reg-grid">
+        <div class="col-hdr">2"</div><div class="col-hdr">1¼"</div><div class="col-hdr">1"</div><div class="col-hdr">¾"</div><div class="col-hdr">½"</div>
+        <input type="text" placeholder="0"><input type="text" placeholder="0"><input type="text" placeholder="0"><input type="text" placeholder="0"><input type="text" placeholder="0">
+      </div>
+    </div>
+    <div class="field full">
+      <label>Pietro – Ventless 2nd Stage</label>
+      <div class="reg-grid">
+        <div class="col-hdr">2"</div><div class="col-hdr">1¼"</div><div class="col-hdr">1"</div><div class="col-hdr">¾"</div><div class="col-hdr">½"</div>
+        <input type="text" placeholder="0"><input type="text" placeholder="0"><input type="text" placeholder="0"><input type="text" placeholder="0"><input type="text" placeholder="0">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MATERIALS -->
+<div class="section">
+  <div class="section-title">Materials Used</div>
+  <div class="section-body" id="mat-body">
+    <!-- Built by JS -->
+  </div>
+</div>
+
+<!-- INSPECTIONS -->
+<div class="section">
+  <div class="section-title">Inspections</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field"><label>Team Member</label><input type="text" placeholder="Name"></div>
+      <div class="field"><label>Double Checked By</label><input type="text" placeholder="Name"></div>
+    </div>
+    <div class="field"><label>Inspected</label><div class="yn"><input type="radio" name="g-insp" id="g-in-y"><label for="g-in-y" class="y">Y</label><input type="radio" name="g-insp" id="g-in-n"><label for="g-in-n" class="n">N</label></div></div>
+    <div class="field"><label>FIRE Inspector</label><div class="yn"><input type="radio" name="g-fi" id="g-fi-y"><label for="g-fi-y" class="y">Y</label><input type="radio" name="g-fi" id="g-fi-n"><label for="g-fi-n" class="n">N</label></div></div>
+    <div class="field"><label>County</label><div class="yn"><input type="radio" name="g-co" id="g-co-y"><label for="g-co-y" class="y">Y</label><input type="radio" name="g-co" id="g-co-n"><label for="g-co-n" class="n">N</label></div></div>
+    <div class="field"><label>Gas Rough</label><div class="yn"><input type="radio" name="g-gr" id="g-gr-y"><label for="g-gr-y" class="y">Y</label><input type="radio" name="g-gr" id="g-gr-n"><label for="g-gr-n" class="n">N</label></div></div>
+    <div class="field"><label>Tank</label><div class="yn"><input type="radio" name="g-tk" id="g-tk-y"><label for="g-tk-y" class="y">Y</label><input type="radio" name="g-tk" id="g-tk-n"><label for="g-tk-n" class="n">N</label></div></div>
+    <div class="field"><label>Underground Gas</label><div class="yn"><input type="radio" name="g-ug" id="g-ug-y"><label for="g-ug-y" class="y">Y</label><input type="radio" name="g-ug" id="g-ug-n"><label for="g-ug-n" class="n">N</label></div></div>
+    <div class="field"><label>Final Gas Passed</label><div class="yn"><input type="radio" name="g-fg" id="g-fg-y"><label for="g-fg-y" class="y">Y</label><input type="radio" name="g-fg" id="g-fg-n"><label for="g-fg-n" class="n">N</label></div></div>
+  </div>
+</div>
+
+<!-- CLEAN UP -->
+<div class="section">
+  <div class="section-title">Clean Up & Miscues</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field"><label>Team Member</label><input type="text" placeholder="Name"></div>
+      <div class="field"><label>Double Checked By</label><input type="text" placeholder="Name"></div>
+    </div>
+    <div class="field"><label>Everything Picked Up & Clean</label><div class="yn"><input type="radio" name="g-cl" id="g-cl-y"><label for="g-cl-y" class="y">Y</label><input type="radio" name="g-cl" id="g-cl-n"><label for="g-cl-n" class="n">N</label></div></div>
+    <div class="field"><label>Ready for H/O Training</label><div class="yn"><input type="radio" name="g-ho" id="g-ho-y"><label for="g-ho-y" class="y">Y</label><input type="radio" name="g-ho" id="g-ho-n"><label for="g-ho-n" class="n">N</label></div></div>
+    <div class="field full"><label>Why Not Ready</label><input type="text" placeholder="Reason if not ready"></div>
+    <div class="field full"><label>Miscues or Delays</label><textarea rows="3" placeholder="Any miscues or delays during the job…"></textarea></div>
+  </div>
+</div>
+
+</div><!-- /form-wrap -->
+
+<div class="bottom-bar">
+  <button class="btn-clear" onclick="clearAll()">🗑 Clear Form</button>
+  <button class="btn-save" onclick="window.print()">🖨 Print / Save PDF</button>
+</div>
+
+<script>
+document.getElementById('g-date').valueAsDate = new Date();
+
+// Build materials table
+const matSections = [
+  { title: 'Straps & Hardware', sizes: ['2"','1-1/4"','1"','¾"','½"'], items: [
+    '3/16 C-Bolt Clamp','Tank Anchor – 48inch','17lb Anode Bags','9Lb Anode Bags',
+    '¾ Inch Galv. 2-Hole Straps','½ Inch Galv. 2-Hole Straps','¾ Inch CCST (Per Ft)',
+    '½ Inch (Shut off)','¾ Inch Shut off','CSST Fitting','CCST Union Fitting',
+    '20-Inch POL x POL','12-Inch POL x POL','Rigid Pipe Strut Clamp','Galvanized Minis'
+  ]},
+  { title: 'Galvanized Nipples', sizes: ['2"','1-1/4"','1"','¾"','½"'], items: [
+    'CLOSE STD Nipple','1½ Inch Nipple','2 Inch Nipple','3 Inch Nipple','4 Inch Nipple',
+    '5 Inch Nipple','6 Inch Nipple','8 Inch Nipple','10 Inch Nipple','12 Inch Nipple'
+  ]},
+  { title: 'Poly Fittings', sizes: ['2"','1-1/4"','1"','¾"','½"'], items: [
+    'Underground Poly (Per Ft)','Fusion Coupler','Tee','90 Elbow','Reducer Coupler'
+  ]},
+  { title: 'Risers', sizes: ['2"','1-1/4"','1"','¾"','½"'], items: [
+    'Gas Riser (30" V x 24" H)','Transition'
+  ]},
+];
+
+const matBody = document.getElementById('mat-body');
+matSections.forEach(sec => {
+  const hdr = document.createElement('div');
+  hdr.className = 'mat-section-hdr';
+  hdr.textContent = sec.title + ' — ' + sec.sizes.join(' / ');
+  matBody.appendChild(hdr);
+  // column headers
+  const colHdr = document.createElement('div');
+  colHdr.className = 'mat-row';
+  colHdr.style.gridTemplateColumns = '2fr repeat(' + sec.sizes.length + ',1fr)';
+  colHdr.innerHTML = '<div class="mat-lbl" style="font-weight:700;color:#5a7a96;font-size:11px">Item</div>' +
+    sec.sizes.map(s => '<div style="text-align:center;font-size:10px;font-weight:700;color:#5a7a96">' + s + '</div>').join('');
+  matBody.appendChild(colHdr);
+  sec.items.forEach(item => {
+    const row = document.createElement('div');
+    row.className = 'mat-row';
+    row.style.gridTemplateColumns = '2fr repeat(' + sec.sizes.length + ',1fr)';
+    row.innerHTML = '<div class="mat-lbl">' + item + '</div>' +
+      sec.sizes.map(() => '<input type="text" inputmode="numeric" placeholder="0">').join('');
+    matBody.appendChild(row);
+  });
+});
+
+// Other notes
+const othHdr = document.createElement('div');
+othHdr.className = 'mat-section-hdr';
+othHdr.textContent = 'Other';
+matBody.appendChild(othHdr);
+for (let i = 0; i < 4; i++) {
+  const inp = document.createElement('input');
+  inp.type = 'text';
+  inp.placeholder = 'Other item ' + (i+1);
+  inp.style.cssText = 'width:100%;padding:9px 10px;border:1.5px solid #d0dde8;border-radius:8px;font-size:15px;background:#fafbfd;outline:none;margin-bottom:6px;';
+  matBody.appendChild(inp);
+}
+
+function clearAll() {
+  if (!confirm('Clear all fields?')) return;
+  document.querySelectorAll('input[type=text],input[type=date],textarea').forEach(el => el.value = '');
+  document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(el => el.checked = false);
+}
+</script>
+</body>
+</html>

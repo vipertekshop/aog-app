@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maintenance Report – AOG</title>
+<meta name="theme-color" content="#0f2236">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:#1a2a38;font-size:14px;padding-bottom:100px;}
+
+/* NAV BAR */
+.navbar{position:sticky;top:0;z-index:100;background:#0f2236;display:flex;align-items:center;gap:12px;padding:0 16px;height:52px;box-shadow:0 2px 8px rgba(0,0,0,0.3);}
+.back-btn{color:#f5a623;font-size:22px;text-decoration:none;line-height:1;padding:4px 0;-webkit-tap-highlight-color:transparent;}
+.nav-title{color:#fff;font-size:16px;font-weight:700;letter-spacing:0.5px;}
+.nav-actions{margin-left:auto;display:flex;gap:8px;}
+.nav-btn{background:rgba(255,255,255,0.12);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.nav-btn.primary{background:#f5a623;color:#0f2236;}
+
+/* FORM */
+.form-wrap{max-width:680px;margin:0 auto;padding:16px;}
+
+.section{background:#fff;border-radius:12px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+.section-title{background:#1a3a5c;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
+.section-body{padding:14px 16px;display:flex;flex-direction:column;gap:12px;}
+
+.row{display:flex;flex-wrap:wrap;gap:10px;}
+.field{flex:1;min-width:140px;display:flex;flex-direction:column;gap:4px;}
+.field.full{flex-basis:100%;min-width:100%;}
+.field label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:#5a7a96;}
+.field input[type=text],.field input[type=date],.field textarea{width:100%;padding:9px 10px;border:1.5px solid #d0dde8;border-radius:8px;font-size:15px;background:#fafbfd;outline:none;font-family:inherit;}
+.field input:focus,.field textarea:focus{border-color:#1a3a5c;background:#eef3f8;}
+.field textarea{resize:vertical;min-height:60px;}
+
+/* RADIO / CHECKBOX PILLS */
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.pills input{display:none;}
+.pills label{padding:7px 14px;border:1.5px solid #d0dde8;border-radius:8px;font-size:13px;font-weight:600;color:#5a7a96;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;transition:all .15s;}
+.pills input:checked+label{background:#1a3a5c;border-color:#1a3a5c;color:#fff;}
+.pills input[type=checkbox]:checked+label{background:#1a3a5c;border-color:#1a3a5c;color:#fff;}
+
+/* Y/N */
+.yn{display:flex;gap:8px;margin-top:2px;}
+.yn input{display:none;}
+.yn label{padding:7px 20px;border:1.5px solid #d0dde8;border-radius:8px;font-size:14px;font-weight:700;color:#5a7a96;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;}
+.yn input:checked+label.y{background:#1b5e20;border-color:#1b5e20;color:#fff;}
+.yn input:checked+label.n{background:#b71c1c;border-color:#b71c1c;color:#fff;}
+
+/* SIG */
+.sig-wrap{border:1.5px solid #d0dde8;border-radius:8px;background:#fafbfd;position:relative;overflow:hidden;}
+.sig-wrap canvas{display:block;width:100%;cursor:crosshair;touch-action:none;}
+.sig-lbl{position:absolute;bottom:6px;left:12px;font-size:10px;color:#b0bec5;font-weight:600;text-transform:uppercase;pointer-events:none;}
+.sig-clear{position:absolute;top:6px;right:8px;background:rgba(0,0,0,0.06);border:none;border-radius:4px;font-size:11px;color:#5a7a96;padding:3px 8px;cursor:pointer;}
+
+/* BOTTOM BAR */
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#0f2236;padding:12px 16px;display:flex;gap:10px;box-shadow:0 -2px 10px rgba(0,0,0,0.3);}
+.bottom-bar button{flex:1;padding:13px 8px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;}
+.btn-save{background:#f5a623;color:#0f2236;}
+.btn-clear{background:rgba(255,255,255,0.12);color:#fff;}
+
+/* PRINT */
+@media print{
+  .navbar,.bottom-bar{display:none!important;}
+  body{background:#fff;padding-bottom:0;}
+  .form-wrap{padding:0;max-width:100%;}
+  .section{box-shadow:none;border:1px solid #ccc;border-radius:4px;margin-bottom:6px;}
+  .section-title{background:#1a3a5c!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .pills label,.yn label{border:1px solid #ccc;padding:3px 8px;font-size:10px;}
+  .pills input:checked+label,.yn input:checked+label.y,.yn input:checked+label.n{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .field input,.field textarea{border:none!important;border-bottom:1px solid #999!important;border-radius:0!important;}
+  .sig-clear{display:none!important;}
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <a class="back-btn" href="/index.html">‹</a>
+  <span class="nav-title">⚡ Maintenance Report</span>
+  <div class="nav-actions">
+    <button class="nav-btn" onclick="clearAll()">Clear</button>
+    <button class="nav-btn primary" onclick="savePDF()">🖨 Print / Save PDF</button>
+  </div>
+</div>
+
+<div class="form-wrap">
+
+<!-- CUSTOMER & JOB INFO -->
+<div class="section">
+  <div class="section-title">Customer & Job Information</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field"><label>Customer Name</label><input type="text" id="name" placeholder="Full name"></div>
+      <div class="field"><label>Phone Number</label><input type="text" id="number" placeholder="(555) 000-0000"></div>
+    </div>
+    <div class="row">
+      <div class="field full"><label>Address</label><input type="text" id="address" placeholder="Street, City, State ZIP"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Technician</label><input type="text" id="tech" placeholder="Tech name"></div>
+      <div class="field"><label>Date</label><input type="date" id="date"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Generator Model</label><input type="text" placeholder="e.g. Generac Guardian"></div>
+      <div class="field"><label>Model #</label><input type="text" placeholder="Model number"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Serial #</label><input type="text" placeholder="Serial number"></div>
+      <div class="field"><label>Hours on Unit</label><input type="text" placeholder="e.g. 250 hrs"></div>
+    </div>
+  </div>
+</div>
+
+<!-- BATTERY -->
+<div class="section">
+  <div class="section-title">Battery</div>
+  <div class="section-body">
+    <div class="field">
+      <label>Visual Appearance</label>
+      <div class="pills">
+        <input type="checkbox" id="bv1"><label for="bv1">Corrosion</label>
+        <input type="checkbox" id="bv2"><label for="bv2">Broken Cables</label>
+        <input type="checkbox" id="bv3"><label for="bv3">Good</label>
+      </div>
+    </div>
+    <div class="field">
+      <label>Condition</label>
+      <div class="pills">
+        <input type="radio" name="battcond" id="bc1"><label for="bc1">Good</label>
+        <input type="radio" name="battcond" id="bc2"><label for="bc2">Average</label>
+        <input type="radio" name="battcond" id="bc3"><label for="bc3">Poor</label>
+        <input type="radio" name="battcond" id="bc4"><label for="bc4">Needs Replaced</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Battery Replaced?</label>
+        <div class="yn">
+          <input type="radio" name="battreplaced" id="br_y"><label for="br_y" class="y">Y</label>
+          <input type="radio" name="battreplaced" id="br_n"><label for="br_n" class="n">N</label>
+        </div>
+      </div>
+      <div class="field"><label>Voltage Under Load</label><input type="text" placeholder="e.g. 12.4V"></div>
+      <div class="field"><label>CCA</label><input type="text" placeholder="Cold Cranking Amps"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Battery Date</label><input type="text" placeholder="MM/YY"></div>
+      <div class="field"><label>SOH %</label><input type="text" placeholder="State of Health"></div>
+      <div class="field"><label>Battery Brand</label><input type="text" placeholder="Brand name"></div>
+    </div>
+    <div class="field">
+      <label>Water Levels</label>
+      <div class="pills">
+        <input type="radio" name="water" id="wl1"><label for="wl1">Low</label>
+        <input type="radio" name="water" id="wl2"><label for="wl2">Full</label>
+        <input type="radio" name="water" id="wl3"><label for="wl3">Added</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GENERATOR -->
+<div class="section">
+  <div class="section-title">Generator</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field"><label>Voltage</label><input type="text" placeholder="e.g. 240V"></div>
+      <div class="field">
+        <label>Pre-work Startup & Run</label>
+        <div class="pills">
+          <input type="radio" name="startup" id="su1"><label for="su1">Normal</label>
+          <input type="radio" name="startup" id="su2"><label for="su2">Not Normal</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Case Check</label>
+        <div class="pills">
+          <input type="radio" name="casecheck" id="cc1"><label for="cc1">Clean</label>
+          <input type="radio" name="casecheck" id="cc2"><label for="cc2">Debris</label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Coolant Level</label>
+        <div class="pills">
+          <input type="radio" name="coolant" id="cl1"><label for="cl1">Full</label>
+          <input type="radio" name="coolant" id="cl2"><label for="cl2">3/4</label>
+          <input type="radio" name="coolant" id="cl3"><label for="cl3">1/2</label>
+          <input type="radio" name="coolant" id="cl4"><label for="cl4">Empty</label>
+        </div>
+      </div>
+    </div>
+    <div class="field"><label>Coolant Added</label><input type="text" placeholder="e.g. 1 qt"></div>
+    <div class="field">
+      <label>Wire Check</label>
+      <div class="pills">
+        <input type="checkbox" id="wc1"><label for="wc1">Loose Connections</label>
+        <input type="checkbox" id="wc2"><label for="wc2">Broken</label>
+        <input type="checkbox" id="wc3"><label for="wc3">Damaged Wires</label>
+        <input type="checkbox" id="wc4"><label for="wc4">Good</label>
+      </div>
+    </div>
+    <div class="field">
+      <label>Interior Check</label>
+      <div class="pills">
+        <input type="checkbox" id="ic1"><label for="ic1">Belts</label>
+        <input type="checkbox" id="ic2"><label for="ic2">Pulleys</label>
+        <input type="checkbox" id="ic3"><label for="ic3">Hoses</label>
+        <input type="checkbox" id="ic4"><label for="ic4">Harness</label>
+      </div>
+    </div>
+    <div class="field">
+      <label>Generator Condition</label>
+      <div class="pills">
+        <input type="radio" name="gencond" id="gc1"><label for="gc1">Good</label>
+        <input type="radio" name="gencond" id="gc2"><label for="gc2">Average</label>
+        <input type="radio" name="gencond" id="gc3"><label for="gc3">Poor</label>
+        <input type="radio" name="gencond" id="gc4"><label for="gc4">Needs Replaced</label>
+      </div>
+    </div>
+    <div class="field"><label>Exercise Time</label><input type="text" placeholder="e.g. 30 min"></div>
+    <div class="field"><label>Notes</label><textarea rows="2" placeholder="Generator notes…"></textarea></div>
+  </div>
+</div>
+
+<!-- OIL -->
+<div class="section">
+  <div class="section-title">Oil</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field">
+        <label>Oil Change Type</label>
+        <div class="pills">
+          <input type="radio" name="oiltype" id="ot1"><label for="ot1">Full</label>
+          <input type="radio" name="oiltype" id="ot2"><label for="ot2">1/2</label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Oil Filter Changed?</label>
+        <div class="yn">
+          <input type="radio" name="oilfilter" id="of_y"><label for="of_y" class="y">Y</label>
+          <input type="radio" name="oilfilter" id="of_n"><label for="of_n" class="n">N</label>
+        </div>
+      </div>
+      <div class="field"><label>Filter Part #</label><input type="text" placeholder="Part number"></div>
+    </div>
+    <div class="field"><label>Notes</label><textarea rows="2" placeholder="Oil notes…"></textarea></div>
+  </div>
+</div>
+
+<!-- SIMULATED POWER OUTAGE -->
+<div class="section">
+  <div class="section-title">Simulated Power Outage</div>
+  <div class="section-body">
+    <div class="field">
+      <label>Generator starts up after power outage?</label>
+      <div class="yn">
+        <input type="radio" name="sim1" id="s1y"><label for="s1y" class="y">Y</label>
+        <input type="radio" name="sim1" id="s1n"><label for="s1n" class="n">N</label>
+      </div>
+    </div>
+    <div class="field">
+      <label>Transfer switch transfers to generator power?</label>
+      <div class="yn">
+        <input type="radio" name="sim2" id="s2y"><label for="s2y" class="y">Y</label>
+        <input type="radio" name="sim2" id="s2n"><label for="s2n" class="n">N</label>
+      </div>
+    </div>
+    <div class="field"><label>Voltage from generator during simulation</label><input type="text" placeholder="e.g. 240V"></div>
+    <div class="field">
+      <label>Generator shuts down properly?</label>
+      <div class="yn">
+        <input type="radio" name="sim3" id="s3y"><label for="s3y" class="y">Y</label>
+        <input type="radio" name="sim3" id="s3n"><label for="s3n" class="n">N</label>
+      </div>
+    </div>
+    <div class="field">
+      <label>Transfer switch transfers back to line power?</label>
+      <div class="yn">
+        <input type="radio" name="sim4" id="s4y"><label for="s4y" class="y">Y</label>
+        <input type="radio" name="sim4" id="s4n"><label for="s4n" class="n">N</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GAS -->
+<div class="section">
+  <div class="section-title">Gas</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field">
+        <label>Fuel Type</label>
+        <div class="pills">
+          <input type="radio" name="fuel" id="fu1"><label for="fu1">Natural Gas</label>
+          <input type="radio" name="fuel" id="fu2"><label for="fu2">LP / Propane</label>
+        </div>
+      </div>
+      <div class="field"><label>Tank Level</label><input type="text" placeholder="e.g. 75%"></div>
+    </div>
+    <div class="field">
+      <label>Gas Leak Found?</label>
+      <div class="yn">
+        <input type="radio" name="gasleak" id="gl_y"><label for="gl_y" class="y">Y</label>
+        <input type="radio" name="gasleak" id="gl_n"><label for="gl_n" class="n">N</label>
+      </div>
+    </div>
+    <div class="field">
+      <label>Visual Check</label>
+      <div class="pills">
+        <input type="checkbox" id="gv1"><label for="gv1">Rust</label>
+        <input type="checkbox" id="gv2"><label for="gv2">Shut Off Valve</label>
+        <input type="checkbox" id="gv3"><label for="gv3">Broken Straps</label>
+        <input type="checkbox" id="gv4"><label for="gv4">Vented</label>
+        <input type="checkbox" id="gv5"><label for="gv5">Flex Connection</label>
+        <input type="checkbox" id="gv6"><label for="gv6">Regulator</label>
+        <input type="checkbox" id="gv7"><label for="gv7">Plenum</label>
+      </div>
+    </div>
+    <div class="field"><label>Notes</label><textarea rows="2" placeholder="Gas notes…"></textarea></div>
+  </div>
+</div>
+
+<!-- TRANSFER SWITCH -->
+<div class="section">
+  <div class="section-title">Transfer Switch</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field"><label>Serial #</label><input type="text" placeholder="Serial number"></div>
+      <div class="field">
+        <label>Visual Condition</label>
+        <div class="pills">
+          <input type="radio" name="tscond" id="ts1"><label for="ts1">Good</label>
+          <input type="radio" name="tscond" id="ts2"><label for="ts2">Average</label>
+          <input type="radio" name="tscond" id="ts3"><label for="ts3">Poor</label>
+          <input type="radio" name="tscond" id="ts4"><label for="ts4">Needs Replaced</label>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Wire Check</label>
+      <div class="pills">
+        <input type="checkbox" id="tw1"><label for="tw1">Good</label>
+        <input type="checkbox" id="tw2"><label for="tw2">Loose</label>
+        <input type="checkbox" id="tw3"><label for="tw3">Damaged</label>
+      </div>
+    </div>
+    <div class="field"><label>Notes</label><textarea rows="2" placeholder="Transfer switch notes…"></textarea></div>
+  </div>
+</div>
+
+<!-- OTHER -->
+<div class="section">
+  <div class="section-title">Other</div>
+  <div class="section-body">
+    <div class="row">
+      <div class="field">
+        <label>Surge Protector at T.S.?</label>
+        <div class="yn">
+          <input type="radio" name="surge" id="su_y"><label for="su_y" class="y">Y</label>
+          <input type="radio" name="surge" id="su_n"><label for="su_n" class="n">N</label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Green Lights?</label>
+        <div class="yn">
+          <input type="radio" name="green" id="gr_y"><label for="gr_y" class="y">Y</label>
+          <input type="radio" name="green" id="gr_n"><label for="gr_n" class="n">N</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Monitoring System?</label>
+        <div class="yn">
+          <input type="radio" name="monitor" id="mo_y"><label for="mo_y" class="y">Y</label>
+          <input type="radio" name="monitor" id="mo_n"><label for="mo_n" class="n">N</label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Connected?</label>
+        <div class="yn">
+          <input type="radio" name="connected" id="co_y"><label for="co_y" class="y">Y</label>
+          <input type="radio" name="connected" id="co_n"><label for="co_n" class="n">N</label>
+        </div>
+      </div>
+      <div class="field"><label>Signal %</label><input type="text" placeholder="e.g. 85%"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNATURES -->
+<div class="section">
+  <div class="section-title">Signatures</div>
+  <div class="section-body">
+    <div class="field">
+      <label>Technician Signature</label>
+      <div class="sig-wrap">
+        <canvas id="sig-tech" height="90"></canvas>
+        <span class="sig-lbl">Technician / Date</span>
+        <button class="sig-clear" onclick="clearSig('sig-tech')">Clear</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Customer Signature</label>
+      <div class="sig-wrap">
+        <canvas id="sig-cust" height="90"></canvas>
+        <span class="sig-lbl">Customer / Date</span>
+        <button class="sig-clear" onclick="clearSig('sig-cust')">Clear</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /form-wrap -->
+
+<div class="bottom-bar">
+  <button class="btn-clear" onclick="clearAll()">🗑 Clear Form</button>
+  <button class="btn-save" onclick="savePDF()">🖨 Print / Save PDF</button>
+</div>
+
+<script>
+function initSig(id) {
+  try {
+    const canvas = document.getElementById(id);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    function resize() {
+      const w = Math.max(canvas.parentElement.clientWidth || 300, 300);
+      const r = window.devicePixelRatio || 1;
+      canvas.width = w * r; canvas.height = 90 * r;
+      canvas.style.width = w + 'px'; canvas.style.height = '90px';
+      ctx.scale(r, r); ctx.strokeStyle = '#1a2a38'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    function pos(e) { const r = canvas.getBoundingClientRect(), t = e.touches?e.touches[0]:e; return {x:t.clientX-r.left,y:t.clientY-r.top}; }
+    canvas.addEventListener('mousedown', e=>{drawing=true;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
+    canvas.addEventListener('mousemove', e=>{if(!drawing)return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();});
+    canvas.addEventListener('mouseup', ()=>drawing=false);
+    canvas.addEventListener('mouseleave', ()=>drawing=false);
+    canvas.addEventListener('touchstart', e=>{e.preventDefault();drawing=true;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);},{passive:false});
+    canvas.addEventListener('touchmove', e=>{e.preventDefault();if(!drawing)return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();},{passive:false});
+    canvas.addEventListener('touchend', ()=>drawing=false);
+  } catch(e) { console.warn('Sig init failed:', e); }
+}
+
+function clearSig(id) {
+  try { const c=document.getElementById(id); if(c) c.getContext('2d').clearRect(0,0,c.width,c.height); } catch(e) {}
+}
+
+function savePDF() { window.print(); }
+
+function clearAll() {
+  if (!confirm('Clear all fields?')) return;
+  document.querySelectorAll('input[type=text],input[type=date],textarea').forEach(el=>el.value='');
+  document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(el=>el.checked=false);
+  clearSig('sig-tech'); clearSig('sig-cust');
+}
+
+// Run after page is fully loaded
+window.addEventListener('load', function() {
+  try { document.getElementById('date').valueAsDate = new Date(); } catch(e) {}
+  initSig('sig-tech');
+  initSig('sig-cust');
+});
+</script>
+</body>
+</html>

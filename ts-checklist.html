@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TS Checklist Preview – AOG</title>
+<meta name="theme-color" content="#0f2236">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:#1a2a38;font-size:14px;padding-bottom:100px;}
+.navbar{position:sticky;top:0;z-index:100;background:#0f2236;display:flex;align-items:center;gap:12px;padding:0 16px;height:52px;box-shadow:0 2px 8px rgba(0,0,0,0.3);}
+.back-btn{color:#f5a623;font-size:22px;text-decoration:none;line-height:1;padding:4px 0;-webkit-tap-highlight-color:transparent;}
+.nav-title{color:#fff;font-size:16px;font-weight:700;letter-spacing:0.5px;}
+.nav-actions{margin-left:auto;display:flex;gap:8px;}
+.nav-btn{background:rgba(255,255,255,0.12);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.nav-btn.primary{background:#f5a623;color:#0f2236;}
+.form-wrap{max-width:680px;margin:0 auto;padding:16px;}
+.section{background:#fff;border-radius:12px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+.section-title{background:#1a3a5c;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
+.section-body{padding:14px 16px;display:flex;flex-direction:column;gap:0;}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;}
+.field{flex:1;min-width:140px;display:flex;flex-direction:column;gap:4px;}
+.field.full{flex-basis:100%;min-width:100%;}
+.field label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:#5a7a96;}
+.field input[type=text],.field input[type=date]{width:100%;padding:9px 10px;border:1.5px solid #d0dde8;border-radius:8px;font-size:15px;background:#fafbfd;outline:none;font-family:inherit;}
+.field input:focus{border-color:#1a3a5c;background:#eef3f8;}
+.check-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #f0f4f8;}
+.check-row.last{border-bottom:none;}
+.check-num{font-size:12px;font-weight:700;color:#5a7a96;min-width:20px;}
+.check-label{flex:1;font-size:14px;font-weight:600;color:#1a2a38;line-height:1.3;}
+.check-options{display:flex;gap:6px;flex-shrink:0;}
+.check-options input{display:none;}
+.check-options label{padding:6px 11px;border:1.5px solid #d0dde8;border-radius:8px;font-size:12px;font-weight:700;color:#5a7a96;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;white-space:nowrap;transition:all .15s;}
+.check-options input:checked+label.good{background:#1b5e20;border-color:#1b5e20;color:#fff;}
+.check-options input:checked+label.bad{background:#b71c1c;border-color:#b71c1c;color:#fff;}
+.check-options input:checked+label.yes{background:#1b5e20;border-color:#1b5e20;color:#fff;}
+.check-options input:checked+label.no{background:#b71c1c;border-color:#b71c1c;color:#fff;}
+.check-options input:checked+label.installed{background:#1a3a5c;border-color:#1a3a5c;color:#fff;}
+.check-options input:checked+label.removed{background:#e65100;border-color:#e65100;color:#fff;}
+.check-options input:checked+label.complete{background:#1b5e20;border-color:#1b5e20;color:#fff;}
+.check-options input:checked+label.notdone{background:#b71c1c;border-color:#b71c1c;color:#fff;}
+.check-single{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #f0f4f8;}
+.check-single.last{border-bottom:none;}
+.check-single input[type=checkbox]{width:22px;height:22px;accent-color:#1a3a5c;cursor:pointer;flex-shrink:0;}
+.snote-wrap{padding:10px 0 2px;}
+.snote-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:#5a7a96;margin-bottom:5px;}
+.snote{width:100%;padding:9px 10px;border:1.5px solid #d0dde8;border-radius:8px;font-size:14px;background:#fafbfd;outline:none;font-family:inherit;color:#1a2a38;resize:vertical;min-height:56px;}
+.snote:focus{border-color:#1a3a5c;background:#eef3f8;}
+.snote::placeholder{color:#b0bec5;}
+/* SUMMARY */
+.sum-section{background:#fff;border-radius:12px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+.sum-title{background:#f5a623;color:#0f2236;padding:10px 16px;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:0.5px;}
+.sum-body{padding:14px 16px;display:flex;flex-direction:column;gap:14px;}
+.sum-field{display:flex;flex-direction:column;gap:5px;}
+.sum-field label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:#5a7a96;}
+.sum-field textarea{width:100%;padding:9px 10px;border:1.5px solid #d0dde8;border-radius:8px;font-size:14px;background:#fafbfd;outline:none;font-family:inherit;resize:vertical;min-height:70px;}
+.sum-field textarea:focus{border-color:#f5a623;background:#fffbf0;}
+.sum-field textarea::placeholder{color:#b0bec5;}
+.status-pills{display:flex;gap:8px;flex-wrap:wrap;}
+.status-pills input{display:none;}
+.status-pills label{padding:8px 18px;border:1.5px solid #d0dde8;border-radius:8px;font-size:13px;font-weight:700;color:#5a7a96;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s;}
+.status-pills input:checked+label.pass{background:#1b5e20;border-color:#1b5e20;color:#fff;}
+.status-pills input:checked+label.fail{background:#b71c1c;border-color:#b71c1c;color:#fff;}
+.status-pills input:checked+label.partial{background:#e65100;border-color:#e65100;color:#fff;}
+/* SIG */
+.sig-wrap{border:1.5px solid #d0dde8;border-radius:8px;background:#fafbfd;position:relative;overflow:hidden;}
+.sig-wrap canvas{display:block;width:100%;cursor:crosshair;touch-action:none;}
+.sig-lbl{position:absolute;bottom:6px;left:12px;font-size:10px;color:#b0bec5;font-weight:600;text-transform:uppercase;pointer-events:none;}
+.sig-clr{position:absolute;top:6px;right:8px;background:rgba(0,0,0,0.06);border:none;border-radius:4px;font-size:11px;color:#5a7a96;padding:3px 8px;cursor:pointer;}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#0f2236;padding:12px 16px;display:flex;gap:10px;box-shadow:0 -2px 10px rgba(0,0,0,0.3);}
+.bottom-bar button{flex:1;padding:13px 8px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;}
+.btn-save{background:#f5a623;color:#0f2236;}
+.btn-clear{background:rgba(255,255,255,0.12);color:#fff;}
+@media print{
+  .navbar,.bottom-bar,.sig-clr{display:none!important;}
+  body{background:#fff;padding-bottom:0;}
+  .form-wrap{padding:0;max-width:100%;}
+  .section,.sum-section{box-shadow:none;border:1px solid #ccc;border-radius:4px;margin-bottom:6px;}
+  .section-title{background:#1a3a5c!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .sum-title{background:#f5a623!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .check-options label,.status-pills label{border:1px solid #ccc;padding:3px 8px;font-size:10px;}
+  .check-options input:checked+label,.status-pills input:checked+label{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .field input,.snote,.sum-field textarea{border:none!important;border-bottom:1px solid #999!important;border-radius:0!important;}
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <a class="back-btn" href="/index.html">‹</a>
+  <span class="nav-title">🔌 TS Checklist</span>
+  <div class="nav-actions">
+    <button class="nav-btn" onclick="clearAll()">Clear</button>
+    <button class="nav-btn primary" onclick="window.print()">🖨 Print / Save PDF</button>
+  </div>
+</div>
+
+<div class="form-wrap">
+
+<!-- JOB INFO -->
+<div class="section">
+  <div class="section-title">Job Information</div>
+  <div class="section-body" style="gap:10px;padding:14px 16px;">
+    <div class="row">
+      <div class="field"><label>Customer Name</label><input type="text" placeholder="Full name"></div>
+      <div class="field"><label>Date</label><input type="date" id="ts-date"></div>
+    </div>
+    <div class="row" style="margin-bottom:0;">
+      <div class="field full"><label>Address</label><input type="text" placeholder="Street, City, State ZIP"></div>
+    </div>
+    <div class="row" style="margin-bottom:0;">
+      <div class="field full"><label>Technician Name</label><input type="text" placeholder="Tech name"></div>
+    </div>
+    <div style="height:1px;background:#f0f4f8;margin:10px 0;"></div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#f5a623;margin-bottom:8px;">🔥 Gas Crew</div>
+    <div class="row">
+      <div class="field full"><label>Gas Crew Names</label><input type="text" placeholder="Names of gas crew members"></div>
+    </div>
+    <div class="row" style="margin-bottom:0;">
+      <div class="field"><label>Gas Job Completion Date</label><input type="date" id="gas-date"></div>
+    </div>
+    <div style="height:1px;background:#f0f4f8;margin:10px 0;"></div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#5a7a96;margin-bottom:8px;">⚡ Electrical Crew</div>
+    <div class="row">
+      <div class="field full"><label>Electrical Crew Names</label><input type="text" placeholder="Names of electrical crew members"></div>
+    </div>
+    <div class="row" style="margin-bottom:0;">
+      <div class="field"><label>Electrical Job Completion Date</label><input type="date" id="elec-date"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TRANSFER SWITCH -->
+<div class="section">
+  <div class="section-title">🔄 Transfer Switch</div>
+  <div class="section-body">
+    <div class="check-row"><div class="check-num">1</div><div class="check-label">Check All Wire Connections</div><div class="check-options"><input type="radio" name="ts1" id="ts1g"><label for="ts1g" class="good">Good</label><input type="radio" name="ts1" id="ts1b"><label for="ts1b" class="bad">Bad</label></div></div>
+    <div class="check-row"><div class="check-num">2</div><div class="check-label">Check Conduit Penetrations</div><div class="check-options"><input type="radio" name="ts2" id="ts2g"><label for="ts2g" class="good">Good</label><input type="radio" name="ts2" id="ts2b"><label for="ts2b" class="bad">Bad</label></div></div>
+    <div class="check-row"><div class="check-num">3</div><div class="check-label">Check Lock Rings</div><div class="check-options"><input type="radio" name="ts3" id="ts3g"><label for="ts3g" class="good">Good</label><input type="radio" name="ts3" id="ts3b"><label for="ts3b" class="bad">Bad</label></div></div>
+    <div class="check-row"><div class="check-num">4</div><div class="check-label">Bonding Jumper</div><div class="check-options"><input type="radio" name="ts4" id="ts4i"><label for="ts4i" class="installed">Installed</label><input type="radio" name="ts4" id="ts4r"><label for="ts4r" class="removed">Removed</label></div></div>
+    <div class="check-row last"><div class="check-num">5</div><div class="check-label">Vacuumed</div><div class="check-options"><input type="radio" name="ts5" id="ts5y"><label for="ts5y" class="yes">Yes</label><input type="radio" name="ts5" id="ts5n"><label for="ts5n" class="no">No</label></div></div>
+    <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Transfer Switch…"></textarea></div>
+  </div>
+</div>
+
+<!-- METER / METER MAIN COMBINED -->
+<div class="section">
+  <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+    <span id="meter-title">⚡ Meter</span>
+    <select id="meter-select" onchange="switchMeter(this.value)" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;outline:none;-webkit-appearance:none;appearance:none;padding-right:24px;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22 viewBox=%220 0 10 6%22><path d=%22M0 0l5 6 5-6z%22 fill=%22white%22 opacity=%220.7%22/></svg>');background-repeat:no-repeat;background-position:right 8px center;background-color:rgba(255,255,255,0.12);">
+      <option value="meter">⚡ Meter</option>
+      <option value="metermain">🔧 Meter Main</option>
+    </select>
+  </div>
+
+  <!-- METER CONTENT -->
+  <div class="section-body" id="meter-content">
+    <div class="check-single"><input type="checkbox" id="m1"><label class="check-label" for="m1">Check For Updated Grounding</label></div>
+    <div class="check-single last"><input type="checkbox" id="m2"><label class="check-label" for="m2">Check for ICB</label></div>
+    <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Meter…"></textarea></div>
+  </div>
+
+  <!-- METER MAIN CONTENT -->
+  <div class="section-body" id="metermain-content" style="display:none;">
+    <div class="check-row"><div class="check-num">1</div><div class="check-label">Check All Wire Connections</div><div class="check-options"><input type="radio" name="mm1" id="mm1g"><label for="mm1g" class="good">Good</label><input type="radio" name="mm1" id="mm1b"><label for="mm1b" class="bad">Bad</label></div></div>
+    <div class="check-row"><div class="check-num">2</div><div class="check-label">Check Conduit Penetrations</div><div class="check-options"><input type="radio" name="mm2" id="mm2g"><label for="mm2g" class="good">Good</label><input type="radio" name="mm2" id="mm2b"><label for="mm2b" class="bad">Bad</label></div></div>
+    <div class="check-row"><div class="check-num">3</div><div class="check-label">Check P-Taps</div><div class="check-options"><input type="radio" name="mm3" id="mm3g"><label for="mm3g" class="good">Good</label><input type="radio" name="mm3" id="mm3b"><label for="mm3b" class="bad">Bad</label></div></div>
+    <div class="check-row last"><div class="check-num">4</div><div class="check-label">Vacuumed</div><div class="check-options"><input type="radio" name="mm4" id="mm4y"><label for="mm4y" class="yes">Yes</label><input type="radio" name="mm4" id="mm4n"><label for="mm4n" class="no">No</label></div></div>
+    <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Meter Main…"></textarea></div>
+  </div>
+</div>
+
+<!-- CUSTOMER PANEL -->
+<div class="section">
+  <div class="section-title">🏠 Customer Panel</div>
+  <div class="section-body">
+    <div class="check-row"><div class="check-num">1</div><div class="check-label">Check All Wire Connections</div><div class="check-options"><input type="radio" name="cp1" id="cp1g"><label for="cp1g" class="good">Good</label><input type="radio" name="cp1" id="cp1b"><label for="cp1b" class="bad">Bad</label></div></div>
+    <div class="check-row"><div class="check-num">2</div><div class="check-label">Grounds And Neutrals Separated</div><div class="check-options"><input type="radio" name="cp2" id="cp2y"><label for="cp2y" class="yes">Yes</label><input type="radio" name="cp2" id="cp2n"><label for="cp2n" class="no">No</label></div></div>
+    <div class="check-row last"><div class="check-num">3</div><div class="check-label">Bonding Screw</div><div class="check-options"><input type="radio" name="cp3" id="cp3i"><label for="cp3i" class="installed">Installed</label><input type="radio" name="cp3" id="cp3r"><label for="cp3r" class="removed">Removed</label></div></div>
+    <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Customer Panel…"></textarea></div>
+  </div>
+</div>
+
+<!-- LOAD SHEDDING -->
+<div class="section">
+  <div class="section-title">⚙️ Load Shedding</div>
+  <div class="section-body">
+    <div class="check-row"><div class="check-num">1</div><div class="check-label">Settings Set Correctly</div><div class="check-options"><input type="radio" name="ls1" id="ls1y"><label for="ls1y" class="yes">Yes</label><input type="radio" name="ls1" id="ls1n"><label for="ls1n" class="no">No</label></div></div>
+    <div class="check-row last"><div class="check-num">2</div><div class="check-label">Scroll Saver Mode Set</div><div class="check-options"><input type="radio" name="ls2" id="ls2y"><label for="ls2y" class="yes">Yes</label><input type="radio" name="ls2" id="ls2n"><label for="ls2n" class="no">No</label></div></div>
+    <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Load Shedding…"></textarea></div>
+  </div>
+</div>
+
+<!-- CONDUIT STRAPPING -->
+<div class="section">
+  <div class="section-title">📐 Conduit Strapping</div>
+  <div class="section-body">
+    <div class="check-row"><div class="check-num">1</div><div class="check-label">Penetration Caulked or Foamed</div><div class="check-options"><input type="radio" name="cs1" id="cs1y"><label for="cs1y" class="yes">Yes</label><input type="radio" name="cs1" id="cs1n"><label for="cs1n" class="no">No</label></div></div>
+    <div class="check-row last"><div class="check-num">2</div><div class="check-label">Strapping Condition</div><div class="check-options"><input type="radio" name="cs2" id="cs2g"><label for="cs2g" class="good">Good</label><input type="radio" name="cs2" id="cs2b"><label for="cs2b" class="bad">Bad</label></div></div>
+    <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Conduit Strapping…"></textarea></div>
+  </div>
+</div>
+
+<!-- GENERATOR -->
+<div class="section">
+  <div class="section-title">⚡ Generator</div>
+  <div class="section-body">
+    <div class="check-row"><div class="check-num">1</div><div class="check-label">Clearance</div><div class="check-options"><input type="radio" name="gen1" id="gen1g"><label for="gen1g" class="good">Good</label><input type="radio" name="gen1" id="gen1b"><label for="gen1b" class="bad">Bad</label></div></div>
+    <div class="check-row"><div class="check-num">2</div><div class="check-label">Battery Install</div><div class="check-options"><input type="radio" name="gen2" id="gen2g"><label for="gen2g" class="good">Good</label><input type="radio" name="gen2" id="gen2b"><label for="gen2b" class="bad">Bad</label></div></div>
+    <div class="check-row"><div class="check-num">3</div><div class="check-label">Gen Connections</div><div class="check-options"><input type="radio" name="gen3" id="gen3g"><label for="gen3g" class="good">Good</label><input type="radio" name="gen3" id="gen3b"><label for="gen3b" class="bad">Bad</label></div></div>
+    <div class="check-row"><div class="check-num">4</div><div class="check-label">Controller Settings</div><div class="check-options"><input type="radio" name="gen4" id="gen4c"><label for="gen4c" class="complete">Complete</label><input type="radio" name="gen4" id="gen4n"><label for="gen4n" class="notdone">Not Done</label></div></div>
+    <div class="check-row"><div class="check-num">5</div><div class="check-label">Adjust Gas</div><div class="check-options"><input type="radio" name="gen5" id="gen5c"><label for="gen5c" class="complete">Complete</label><input type="radio" name="gen5" id="gen5n"><label for="gen5n" class="notdone">Not Done</label></div></div>
+    <div class="check-row last"><div class="check-num">6</div><div class="check-label">Generator Clean</div><div class="check-options"><input type="radio" name="gen6" id="gen6y"><label for="gen6y" class="yes">Yes</label><input type="radio" name="gen6" id="gen6n"><label for="gen6n" class="no">No</label></div></div>
+    <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Generator…"></textarea></div>
+  </div>
+</div>
+
+<!-- GAS TANK -->
+<div class="section">
+  <div class="section-title">🛢️ Gas Tank</div>
+  <div class="section-body">
+    <div class="check-row"><div class="check-num">1</div><div class="check-label">Vacuumed</div><div class="check-options"><input type="radio" name="gt1" id="gt1y"><label for="gt1y" class="yes">Yes</label><input type="radio" name="gt1" id="gt1n"><label for="gt1n" class="no">No</label></div></div>
+    <div class="check-row"><div class="check-num">2</div><div class="check-label">Filled?</div><div class="check-options"><input type="radio" name="gt2" id="gt2y"><label for="gt2y" class="yes">Yes</label><input type="radio" name="gt2" id="gt2n"><label for="gt2n" class="no">No</label></div></div>
+    <div class="check-row last"><div class="check-num">3</div><div class="check-label">Leak Check</div><div class="check-options"><input type="radio" name="gt3" id="gt3y"><label for="gt3y" class="yes">Yes</label><input type="radio" name="gt3" id="gt3n"><label for="gt3n" class="no">No</label></div></div>
+    <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Gas Tank…"></textarea></div>
+  </div>
+</div>
+
+<!-- GAS -->
+<div class="section">
+  <div class="section-title">🔥 Gas</div>
+  <div class="section-body">
+    <div class="check-row"><div class="check-num">1</div><div class="check-label">Leak Check</div><div class="check-options"><input type="radio" name="gas1" id="gas1y"><label for="gas1y" class="yes">Yes</label><input type="radio" name="gas1" id="gas1n"><label for="gas1n" class="no">No</label></div></div>
+    <div class="check-row"><div class="check-num">2</div><div class="check-label">Threads Painted</div><div class="check-options"><input type="radio" name="gas2" id="gas2y"><label for="gas2y" class="yes">Yes</label><input type="radio" name="gas2" id="gas2n"><label for="gas2n" class="no">No</label></div></div>
+    <div class="check-row"><div class="check-num">3</div><div class="check-label">Gas Supports</div><div class="check-options"><input type="radio" name="gas3" id="gas3g"><label for="gas3g" class="good">Good</label><input type="radio" name="gas3" id="gas3b"><label for="gas3b" class="bad">Bad</label></div></div>
+    <div class="check-row"><div class="check-num">4</div><div class="check-label">Sediment Trap</div><div class="check-options"><input type="radio" name="gas4" id="gas4y"><label for="gas4y" class="yes">Yes</label><input type="radio" name="gas4" id="gas4n"><label for="gas4n" class="no">No</label></div></div>
+    <div class="check-row"><div class="check-num">5</div><div class="check-label">Venting</div><div class="check-options"><input type="radio" name="gas5" id="gas5g"><label for="gas5g" class="good">Good</label><input type="radio" name="gas5" id="gas5b"><label for="gas5b" class="bad">Bad</label></div></div>
+    <div class="check-row"><div class="check-num">6</div><div class="check-label">Leak Down Check Performed</div><div class="check-options"><input type="radio" name="gas6" id="gas6y"><label for="gas6y" class="yes">Yes</label><input type="radio" name="gas6" id="gas6n"><label for="gas6n" class="no">No</label></div></div>
+    <div class="check-row last"><div class="check-num">7</div><div class="check-label">Bonded (Attic Run)</div><div class="check-options"><input type="radio" name="gas7" id="gas7y"><label for="gas7y" class="yes">Yes</label><input type="radio" name="gas7" id="gas7n"><label for="gas7n" class="no">No</label></div></div>
+    <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Gas…"></textarea></div>
+  </div>
+</div>
+
+<!-- JOB SITE -->
+<div class="section">
+  <div class="section-title">🧹 Job Site</div>
+  <div class="section-body">
+    <div class="check-row last"><div class="check-num">1</div><div class="check-label">Cleaned</div><div class="check-options"><input type="radio" name="js1" id="js1y"><label for="js1y" class="yes">Yes</label><input type="radio" name="js1" id="js1n"><label for="js1n" class="no">No</label></div></div>
+    <div class="snote-wrap"><div class="snote-lbl">Section Notes</div><textarea class="snote" placeholder="Notes for Job Site…"></textarea></div>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="sum-section">
+  <div class="sum-title">📋 Summary</div>
+  <div class="sum-body">
+
+    <div class="sum-field">
+      <label>Overall Job Status</label>
+      <div class="status-pills">
+        <input type="radio" name="overall" id="ov-pass"><label for="ov-pass" class="pass">✅ Pass</label>
+        <input type="radio" name="overall" id="ov-fail"><label for="ov-fail" class="fail">❌ Fail</label>
+        <input type="radio" name="overall" id="ov-partial"><label for="ov-partial" class="partial">⚠️ Needs Follow-Up</label>
+      </div>
+    </div>
+
+    <div class="sum-field">
+      <label>Items Requiring Follow-Up</label>
+      <textarea placeholder="List any items that need to be revisited or corrected…"></textarea>
+    </div>
+
+    <div class="sum-field">
+      <label>Additional Comments</label>
+      <textarea placeholder="Any other notes, observations, or customer concerns…"></textarea>
+    </div>
+
+
+
+  </div>
+</div>
+
+</div>
+
+<div class="bottom-bar">
+  <button class="btn-clear" onclick="clearAll()">🗑 Clear Form</button>
+  <button class="btn-save" onclick="window.print()">🖨 Print / Save PDF</button>
+</div>
+
+<script>
+function clearAll() {
+  if (!confirm('Clear all fields?')) return;
+  document.querySelectorAll('input[type=text],input[type=date],textarea').forEach(el => el.value = '');
+  document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(el => el.checked = false);
+}
+function switchMeter(val) {
+  const titles = { meter: '⚡ Meter', metermain: '🔧 Meter Main' };
+  document.getElementById('meter-title').textContent = titles[val];
+  document.getElementById('meter-content').style.display = val === 'meter' ? '' : 'none';
+  document.getElementById('metermain-content').style.display = val === 'metermain' ? '' : 'none';
+}
+
+window.addEventListener('load', function() {
+  try { document.getElementById('ts-date').valueAsDate = new Date(); } catch(e) {}
+});
+</script>
+</body>
+</html>
