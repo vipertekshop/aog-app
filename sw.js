@@ -1,4 +1,4 @@
-const CACHE = 'aog-v3';
+const CACHE = 'aog-v4';
 const FILES = [
   '/',
   '/index.html',
@@ -22,7 +22,9 @@ self.addEventListener('install', e => {
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(keys => Promise.all(
+        keys.filter(k => k !== CACHE).map(k => caches.delete(k))
+      ))
       .then(() => self.clients.claim())
   );
 });
@@ -30,6 +32,22 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   if (!e.request.url.startsWith(self.location.origin)) return;
+
+  // Network first for HTML files so updates are always picked up
+  if (e.request.destination === 'document' || e.request.url.endsWith('.html')) {
+    e.respondWith(
+      fetch(e.request)
+        .then(response => {
+          const clone = response.clone();
+          caches.open(CACHE).then(c => c.put(e.request, clone));
+          return response;
+        })
+        .catch(() => caches.match(e.request))
+    );
+    return;
+  }
+
+  // Cache first for everything else
   e.respondWith(
     caches.match(e.request)
       .then(cached => {
@@ -45,4 +63,9 @@ self.addEventListener('fetch', e => {
           .catch(() => caches.match('/index.html'));
       })
   );
+});
+
+// Force update when message received
+self.addEventListener('message', e => {
+  if (e.data === 'skipWaiting') self.skipWaiting();
 });
